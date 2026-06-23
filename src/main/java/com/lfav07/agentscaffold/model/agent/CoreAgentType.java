@@ -1,4 +1,4 @@
-package com.lfav07.agentscaffold.model;
+package com.lfav07.agentscaffold.model.agent;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.lfav07.agentscaffold.exception.InvalidAgentTypeException;
