@@ -1,7 +1,8 @@
 package com.lfav07.agentscaffold.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.lfav07.agentscaffold.exception.InvalidCoreAgentTypeException;
+import com.lfav07.agentscaffold.exception.InvalidAgentTypeException;
+
 
 public enum CoreAgentType {
     BACKEND_ARCHITECT,
@@ -17,7 +18,7 @@ public enum CoreAgentType {
     @JsonCreator
     public static CoreAgentType fromValue(String value) {
         if (value == null) {
-            throw new InvalidCoreAgentTypeException("Core Agent Type cannot be null");
+            throw new InvalidAgentTypeException("Core Agent Type cannot be null");
         }
 
         String normalized = value.trim()
@@ -27,7 +28,7 @@ public enum CoreAgentType {
         try {
             return CoreAgentType.valueOf(normalized);
         } catch (IllegalArgumentException ex) {
-            throw new InvalidCoreAgentTypeException("Invalid Core Agent Type: " + value);
+            throw new InvalidAgentTypeException("Invalid Core Agent Type: " + value);
         }
     }
 
