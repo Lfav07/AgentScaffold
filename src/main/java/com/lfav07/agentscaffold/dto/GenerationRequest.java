@@ -19,11 +19,11 @@ public record GenerationRequest(
         @NotBlank
         String projectName,
 
-        @NotEmpty
-        Set<BackendStack> backendStack,
+        @NotNull
+        BackendStack backendStack,
 
-        @NotEmpty
-        Set<FrontendStack> frontendStack,
+        @NotNull
+        FrontendStack frontendStack,
 
         Set<CoreAgentType> customCoreAgents,
 
