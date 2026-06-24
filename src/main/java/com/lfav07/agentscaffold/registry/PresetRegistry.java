@@ -2,11 +2,11 @@ package com.lfav07.agentscaffold.registry;
 
 import com.lfav07.agentscaffold.dto.PresetItem;
 import com.lfav07.agentscaffold.model.preset.GenerationPreset;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Component
 public class PresetRegistry {
 
     private static final Map<GenerationPreset, PresetItem> PRESETS = Map.ofEntries(
@@ -24,8 +24,8 @@ public class PresetRegistry {
                     new PresetItem("spring-ready", "Spring Ready", "Lorem ipsum"))
     );
 
-    public static List<PresetItem> getPresets() {
-        return new ArrayList<>(PRESETS.values());
+    public  Set<PresetItem> getPresets() {
+        return new HashSet<>(PRESETS.values());
     }
 
     public static GenerationPreset fromId(String id) {

@@ -3,11 +3,11 @@ package com.lfav07.agentscaffold.registry;
 import com.lfav07.agentscaffold.dto.StackItem;
 import com.lfav07.agentscaffold.model.stack.BackendStack;
 import com.lfav07.agentscaffold.model.stack.FrontendStack;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Component
 public class StackRegistry {
 
     private static final Map<BackendStack, StackItem> BACKEND = Map.of(
@@ -20,19 +20,19 @@ public class StackRegistry {
             new StackItem("typescript-react", "TypeScript + React")
     );
 
-    public static List<StackItem> getBackendStacks() {
-        return new ArrayList<>(BACKEND.values());
+    public Set<StackItem> getBackendStacks() {
+        return new HashSet<>(BACKEND.values());
     }
 
-    public static List<StackItem> getFrontendStacks() {
-        return new ArrayList<>(FRONTEND.values());
+    public Set<StackItem> getFrontendStacks() {
+        return new HashSet<>(FRONTEND.values());
     }
 
-    public static BackendStack fromBackendId(String id) {
+    public BackendStack fromBackendId(String id) {
         return BackendStack.fromValue(id);
     }
 
-    public static FrontendStack fromFrontendId(String id) {
+    public FrontendStack fromFrontendId(String id) {
         return FrontendStack.fromValue(id);
     }
 }

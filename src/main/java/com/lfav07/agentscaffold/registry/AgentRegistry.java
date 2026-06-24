@@ -3,11 +3,11 @@ package com.lfav07.agentscaffold.registry;
 import com.lfav07.agentscaffold.dto.AgentItem;
 import com.lfav07.agentscaffold.model.agent.AdditionalAgentType;
 import com.lfav07.agentscaffold.model.agent.CoreAgentType;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Component
 public class AgentRegistry {
 
     private static final Map<CoreAgentType, AgentItem> CORE = Map.ofEntries(
@@ -31,24 +31,25 @@ public class AgentRegistry {
                     new AgentItem("final-reviewer", "Final Reviewer", "Lorem ipsum"))
     );
 
+    //v2
     private static final Map<AdditionalAgentType, AgentItem> ADDITIONAL = Map.of(
             AdditionalAgentType.SQL_AGENT,
             new AgentItem("sql-agent", "SQL Agent", "Lorem ipsum")
     );
 
-    public static List<AgentItem> getCoreAgents() {
-        return new ArrayList<>(CORE.values());
+    public Set<AgentItem> getCoreAgents() {
+        return new HashSet<>(CORE.values());
     }
 
-    public static List<AgentItem> getAdditionalAgents() {
-        return new ArrayList<>(ADDITIONAL.values());
+    public Set<AgentItem> getAdditionalAgents() {
+        return new HashSet<>(ADDITIONAL.values());
     }
 
-    public static CoreAgentType fromCoreAgentId(String id) {
+    public CoreAgentType fromCoreAgentId(String id) {
         return CoreAgentType.fromValue(id);
     }
 
-    public static AdditionalAgentType fromAdditionalAgentId(String id) {
+    public AdditionalAgentType fromAdditionalAgentId(String id) {
         return AdditionalAgentType.fromValue(id);
     }
 }
