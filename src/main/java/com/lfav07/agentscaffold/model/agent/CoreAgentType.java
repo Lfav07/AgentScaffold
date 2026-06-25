@@ -2,18 +2,32 @@ package com.lfav07.agentscaffold.model.agent;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.lfav07.agentscaffold.exception.InvalidAgentTypeException;
+import com.lfav07.agentscaffold.model.stack.StackCategory;
 
 
 public enum CoreAgentType {
-    BACKEND_ARCHITECT,
-    FRONTEND_ARCHITECT,
-    BACKEND_ARCHITECT_REVIEWER,
-    FRONTEND_ARCHITECT_REVIEWER,
-    BACKEND_IMPLEMENTER,
-    FRONTEND_IMPLEMENTER,
-    BACKEND_TESTER,
-    FRONTEND_TESTER,
-    FINAL_REVIEWER;
+
+    BACKEND_ARCHITECT(StackCategory.BACKEND, "backend-architect"),
+    BACKEND_ARCHITECT_REVIEWER(StackCategory.BACKEND, "backend-architect-reviewer"),
+    BACKEND_IMPLEMENTER(StackCategory.BACKEND, "backend-implementer"),
+    BACKEND_TESTER(StackCategory.BACKEND, "backend-tester"),
+    FRONTEND_ARCHITECT(StackCategory.FRONTEND, "frontend-architect"),
+    FRONTEND_ARCHITECT_REVIEWER(StackCategory.FRONTEND, "frontend-architect-reviewer"),
+    FRONTEND_IMPLEMENTER(StackCategory.FRONTEND, "frontend-implementer"),
+    FRONTEND_TESTER(StackCategory.FRONTEND, "frontend-tester"),
+    FINAL_REVIEWER(StackCategory.GENERAL, "general-final-reviewer");
+
+    private final StackCategory stackCategory;
+    private final String fileName;
+
+    CoreAgentType(StackCategory stackCategory, String fileName) {
+        this.stackCategory = stackCategory;
+        this.fileName = fileName;
+    }
+
+    public String getFileName() { return fileName; }
+    public StackCategory getStackCategory() { return stackCategory; }
+
 
     @JsonCreator
     public static CoreAgentType fromValue(String value) {

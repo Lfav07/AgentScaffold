@@ -4,8 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 
-public enum BackendStack {
-    JAVA_SPRING;
+public enum BackendStack implements  Stack {
+    JAVA_SPRING("java-spring");
+
+    private final String id;
+    BackendStack(String id){
+        this.id = id;
+    }
+    @Override
+    public String getId(){return  id;}
 
     @JsonCreator
     public static BackendStack fromValue(String value) {
