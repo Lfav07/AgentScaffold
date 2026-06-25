@@ -9,13 +9,13 @@ public record AgentExecutionUnit(
         @NotNull Stack stack
 ) {
         public String resolveTemplateFileName() {
-                return type.getFileName();
-                // "backend-architect"
+                return type.getFileName() + ".md";
+                // "backend-architect.md"
         }
 
         public String resolveDefinitionFileName() {
-                return stack.getId() + "-" + type.getFileName();
-                // "java-spring-backend-architect"
+                return stack.getId() + "-" + type.getFileName() + ".md";
+                // "java-spring-backend-architect.md"
         }
 
         public String resolveOutputFileName() {
