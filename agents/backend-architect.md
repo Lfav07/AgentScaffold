@@ -79,6 +79,8 @@ Requirements:
 - Do not include framework wiring.
 - Do not include implementation details.
 - Every referenced contract type must either be defined or have a corresponding implementation ticket.
+- All contracts exposed to framework boundaries must be fully typed and compile-ready. No placeholders, ellipses, 
+or inferred parameters are allowed.
 
 #### Implementation Tickets
 
