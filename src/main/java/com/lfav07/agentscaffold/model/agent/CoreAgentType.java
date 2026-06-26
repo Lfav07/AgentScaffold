@@ -15,7 +15,7 @@ public enum CoreAgentType {
     FRONTEND_ARCHITECT_REVIEWER(StackCategory.FRONTEND, "frontend-architect-reviewer"),
     FRONTEND_IMPLEMENTER(StackCategory.FRONTEND, "frontend-implementer"),
     FRONTEND_TESTER(StackCategory.FRONTEND, "frontend-tester"),
-    FINAL_REVIEWER(StackCategory.GENERAL, "general-final-reviewer");
+    FINAL_REVIEWER(StackCategory.GENERAL, "final-reviewer");
 
     private final StackCategory stackCategory;
     private final String fileName;
