@@ -1,16 +1,20 @@
 package com.lfav07.agentscaffold.model.stack;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 
 public enum BackendStack implements  Stack {
     JAVA_SPRING("java-spring");
 
+    @JsonValue
     private final String id;
+
     BackendStack(String id){
         this.id = id;
     }
+
     @Override
     public String getId(){return  id;}
 

@@ -1,12 +1,15 @@
 package com.lfav07.agentscaffold.model.stack;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 public enum FrontendStack implements  Stack {
     TYPESCRIPT_REACT("typescript-react");
 
+    @JsonValue
     private final String id;
+
     FrontendStack(String id) { this.id = id; }
 
     @Override
