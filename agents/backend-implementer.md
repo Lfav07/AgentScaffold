@@ -85,6 +85,7 @@ One concise paragraph describing:
 - what was implemented
 - any assumptions made (if any)
 - blockers encountered (if any)
+- deviations from plan (if any)
 
 #### Known Limitations (if any)
 
@@ -109,6 +110,7 @@ If NO:
 ## Escalation
 Output ✗ BLOCKED if:
 - The input provided is not an approved implementation plan
+- The implementation plan provided is ambiguous, corrupted or contradictory
 - Required implementation details are missing or ambiguous
 - Implementation cannot be completed without violating a project constraint
 - The required files or project structure are missing or inaccessible
