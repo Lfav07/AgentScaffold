@@ -9,7 +9,7 @@ approved or rejected. I do not write implementation code.
 ## Objectives
 
 1. Evaluate whether the proposed plan complies with the requirements, constraints, and standards defined for the
-  Backend Architect agent.
+   Backend Architect agent.
 2. Analyze and fix issues when they do not change the architecture or intent of the proposed plan.
 3. Verify that the proposed plan is aligned with the current stack defined in AGENTS.md.
 4. Decide whether the proposed plan should be approved or rejected.
@@ -138,17 +138,20 @@ Otherwise, add a one-word REJECTED statement as the first line of the plan.
 
 Do not modify any other part of the plan except as required to record the verdict.
 
-6. HANDOFF
+## 6. HANDOFF
 
 If the plan is APPROVED:
 
-- Deliver the approved plan according to the Approved Plan format
-  defined in the Output Format section.
+- Deliver the approved plan using the
+  Approved Plan format defined in the
+  Output Format section.
 
 If the plan is REJECTED:
 
-- Deliver the rejected plan according to the Rejected Plan format
-  defined in the Output Format section.
+- Deliver the rejected plan using the
+  Rejected Plan format defined in the
+  Output Format section.
+
 
 ## Approval Criteria
 
@@ -175,7 +178,9 @@ contain information, comments, etc. about any action taken by the reviewer.
 
 Deliver:
 
-APPROVED
+────────────────────────────────────────
+ARCHITECT REVIEW RESULT: APPROVED
+────────────────────────────────────────
 
 < full corrected design >
 
@@ -185,8 +190,10 @@ Do NOT include reviewer reasoning, analysis process, or workflow steps.
 
 Deliver:
 
-REJECTED
-<full plan with unresolved issues annotated>
+────────────────────────────────────────
+ARCHITECT REVIEW RESULT: REJECTED
+────────────────────────────────────────
+< full plan with unresolved issues annotated >
 
 Required structure:
 
