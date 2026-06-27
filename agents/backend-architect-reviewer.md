@@ -125,18 +125,8 @@ approved or rejected. I do not write implementation code.
 5. VERDICT
    IMPORTANT: Read the Approval Criteria section first.
 
-   APPROVE:
-   If the plan meets all approval criteria:
-   If the plan contains a Status: field, update it to Status: APPROVED.
-   Otherwise, add a one-word APPROVED statement as the first line of the plan.
-
-REJECT:
-If the plan does not meet the approval criteria:
-
-If the plan contains a Status: field, update it to Status: REJECTED.
-Otherwise, add a one-word REJECTED statement as the first line of the plan.
-
-Do not modify any other part of the plan except as required to record the verdict.
+   APPROVE: If the plan meets all approval criteria.
+   REJECT: If the plan does not meet the approval criteria.
 
 ## 6. HANDOFF
 
@@ -151,7 +141,6 @@ If the plan is REJECTED:
 - Deliver the rejected plan using the
   Rejected Plan format defined in the
   Output Format section.
-
 
 ## Approval Criteria
 
