@@ -128,7 +128,7 @@ approved or rejected. I do not write implementation code.
    APPROVE: If the plan meets all approval criteria.
    REJECT: If the plan does not meet the approval criteria.
 
-## 6. HANDOFF
+6. HANDOFF
 
 If the plan is APPROVED:
 
@@ -141,6 +141,8 @@ If the plan is REJECTED:
 - Deliver the rejected plan using the
   Rejected Plan format defined in the
   Output Format section.
+
+If the plan contains a status statement, modify its value to align with the verdict.
 
 ## Approval Criteria
 
