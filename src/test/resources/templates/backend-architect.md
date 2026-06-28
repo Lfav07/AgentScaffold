@@ -1,0 +1,2 @@
+# {{projectName}}
+{{stackDefinition}}
