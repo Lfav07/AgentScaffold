@@ -1,5 +1,6 @@
 package com.lfav07.agentscaffold.service.impl;
 
+import com.lfav07.agentscaffold.config.AppProperties;
 import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.dto.GenerationRequest;
@@ -22,6 +23,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class GenerationServiceImpl implements GenerationService {
+    private final AppProperties appProperties;
     private final PresetAgentResolver presetAgentResolver;
     private final ContextResolver contextResolver;
     private final TemplateEngine templateEngine;
@@ -41,11 +43,11 @@ public class GenerationServiceImpl implements GenerationService {
         byte[] zip = zipGenerator.generate(fileMap);
         String filename = request.projectName()
                 .trim()
-                .replaceAll("[^a-zA-Z0-9-_]", "-");
+                .replaceAll(appProperties.generation().sanitizeRegex(), "-");
 
         return new GenerationResult(
                 zip,
-                filename + "-agents.zip"
+                filename + appProperties.generation().zipSuffix()
         );
     }
 

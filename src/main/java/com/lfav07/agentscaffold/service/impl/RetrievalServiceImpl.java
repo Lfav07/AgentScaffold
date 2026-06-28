@@ -1,5 +1,6 @@
 package com.lfav07.agentscaffold.service.impl;
 
+import com.lfav07.agentscaffold.config.AppProperties;
 import com.lfav07.agentscaffold.dto.AgentItem;
 import com.lfav07.agentscaffold.dto.PresetItem;
 import com.lfav07.agentscaffold.dto.StackItem;
@@ -11,13 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class RetrievalServiceImpl implements RetrievalService {
+    private final AppProperties appProperties;
     private final AgentRegistry agentRegistry;
     private final StackRegistry stackRegistry;
     private final PresetRegistry presetRegistry;
@@ -30,8 +31,8 @@ public class RetrievalServiceImpl implements RetrievalService {
     @Override
     public Map<String, Set<StackItem>> getAllStacksAvailable() {
         Map<String, Set<StackItem>> result = new HashMap<>();
-        result.put("backend", getBackendStacksAvailable());
-        result.put("frontend", getFrontendStacksAvailable());
+        result.put(appProperties.stacks().categoryLabels().backend(), getBackendStacksAvailable());
+        result.put(appProperties.stacks().categoryLabels().frontend(), getFrontendStacksAvailable());
         return result;
     }
 

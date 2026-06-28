@@ -6,3 +6,15 @@ spring:
   web:
     resources:
       add-mappings: false
+
+app:
+  paths:
+    definitions: definitions
+    templates: templates
+  generation:
+    sanitize-regex: "[^a-zA-Z0-9-_]"
+    zip-suffix: "-agents.zip"
+  stacks:
+    category-labels:
+      backend: backend
+      frontend: frontend

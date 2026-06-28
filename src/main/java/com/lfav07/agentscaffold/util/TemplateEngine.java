@@ -1,5 +1,6 @@
 package com.lfav07.agentscaffold.util;
 
+import com.lfav07.agentscaffold.config.AppProperties;
 import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.exception.TemplateNotFoundException;
@@ -12,7 +13,11 @@ import java.util.Map;
 
 @Component
 public class TemplateEngine {
-    private static final String TEMPLATES_PATH = "templates";
+    private final AppProperties appProperties;
+
+    public TemplateEngine(AppProperties appProperties) {
+        this.appProperties = appProperties;
+    }
 
     public String buildAgent(
             AgentExecutionUnit executionUnit,
@@ -30,7 +35,7 @@ public class TemplateEngine {
     }
 
     private String loadTemplate(String filePath){
-        ClassPathResource finalPath = new ClassPathResource(TEMPLATES_PATH + "/" + filePath);
+        ClassPathResource finalPath = new ClassPathResource(appProperties.paths().templates() + "/" + filePath);
         String content;
         try {
             content = finalPath.getContentAsString(StandardCharsets.UTF_8);

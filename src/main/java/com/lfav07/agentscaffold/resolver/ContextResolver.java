@@ -1,5 +1,6 @@
 package com.lfav07.agentscaffold.resolver;
 
+import com.lfav07.agentscaffold.config.AppProperties;
 import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.exception.TemplateNotFoundException;
@@ -8,13 +9,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
 public class ContextResolver {
-    private static final String DEFINITIONS_PATH = "definitions";
+    private final AppProperties appProperties;
 
     public AgentRenderContext resolve(AgentExecutionUnit unit, String projectName){
        String definitionContent = loadDefinition(unit.resolveDefinitionFileName());
@@ -22,7 +22,7 @@ public class ContextResolver {
     }
 
     private String loadDefinition(String filePath){
-        ClassPathResource finalPath = new ClassPathResource(DEFINITIONS_PATH + "/" + filePath);
+        ClassPathResource finalPath = new ClassPathResource(appProperties.paths().definitions() + "/" + filePath);
         String content;
         try {
             content = finalPath.getContentAsString(StandardCharsets.UTF_8);
