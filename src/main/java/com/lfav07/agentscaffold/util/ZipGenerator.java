@@ -13,6 +13,13 @@ import java.util.zip.ZipOutputStream;
 public class ZipGenerator {
 
 
+    /**
+     * Creates a ZIP archive in memory from a map of file paths to their string contents.
+     *
+     * @param files a map of file paths (entries) to file contents.
+     * @return the ZIP archive as a byte array.
+     * @throws ZipGenerationException if an I/O error occurs during writing.
+     */
     public byte[] generate(Map<String, String> files) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

@@ -9,6 +9,7 @@ import com.lfav07.agentscaffold.exception.ZipGenerationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -50,11 +51,18 @@ public class GlobalExceptionHandler {
         return buildError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request);
     }
 
+    /**
+     * Handles validation errors by extracting the first field error message from the request body.
+     *
+     * @param e       the validation exception containing field errors.
+     * @param request the current HTTP request.
+     * @return a response entity with the validation error details.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
         String message = e.getBindingResult().getFieldErrors().stream()
                 .findFirst()
-                .map(fe -> fe.getDefaultMessage())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .orElse("Validation failed");
         return buildError(HttpStatus.BAD_REQUEST, message, request);
     }

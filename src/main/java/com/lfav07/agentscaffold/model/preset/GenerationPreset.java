@@ -12,6 +12,13 @@ public enum GenerationPreset {
     REACT_READY,
     SPRING_READY;
 
+    /**
+     * Resolves a case-insensitive string value to the corresponding generation preset constant.
+     *
+     * @param value the string value to resolve (may be null or malformed).
+     * @return the matching GenerationPreset constant.
+     * @throws InvalidPresetException if no match is found or the value is null.
+     */
     @JsonCreator
     public static GenerationPreset fromValue(String value) {
         if (value == null) {

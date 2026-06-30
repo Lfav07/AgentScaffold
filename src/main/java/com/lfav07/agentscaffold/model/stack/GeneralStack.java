@@ -12,6 +12,13 @@ public enum GeneralStack implements Stack {
     @Override
     public String getId() { return id; }
 
+    /**
+     * Resolves a case-insensitive string value to the corresponding general stack constant.
+     *
+     * @param value the string value to resolve (may be null or malformed).
+     * @return the matching GeneralStack constant.
+     * @throws InvalidStackException if no match is found or the value is null.
+     */
     @JsonCreator
     public static GeneralStack fromValue(String value) {
         if (value == null) {

@@ -21,6 +21,13 @@ public class ContextResolver {
        return new AgentRenderContext(projectName, definitionContent);
     }
 
+    /**
+     * Loads a definition file from the classpath under the configured definitions directory.
+     *
+     * @param filePath the definition file name relative to the definitions directory.
+     * @return the definition content as a string.
+     * @throws TemplateNotFoundException if the definition file cannot be read.
+     */
     private String loadDefinition(String filePath){
         ClassPathResource finalPath = new ClassPathResource(appProperties.paths().definitions() + "/" + filePath);
         String content;

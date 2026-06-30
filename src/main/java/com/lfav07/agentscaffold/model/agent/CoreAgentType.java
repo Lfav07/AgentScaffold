@@ -29,6 +29,13 @@ public enum CoreAgentType {
     public StackCategory getStackCategory() { return stackCategory; }
 
 
+    /**
+     * Resolves a case-insensitive string value to the corresponding core agent type constant.
+     *
+     * @param value the string value to resolve (may be null or malformed).
+     * @return the matching CoreAgentType constant.
+     * @throws InvalidAgentTypeException if no match is found or the value is null.
+     */
     @JsonCreator
     public static CoreAgentType fromValue(String value) {
         if (value == null) {

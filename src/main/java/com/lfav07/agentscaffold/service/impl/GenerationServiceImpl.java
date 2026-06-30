@@ -29,6 +29,13 @@ public class GenerationServiceImpl implements GenerationService {
     private final TemplateEngine templateEngine;
     private final ZipGenerator zipGenerator;
 
+    /**
+     * Generates a project ZIP by resolving preset agents, rendering templates for each agent,
+     * and packaging the resulting files into a byte array.
+     *
+     * @param request the generation request containing project name, stacks, and agents.
+     * @return the generation result containing the ZIP bytes and filename.
+     */
     @Override
     public GenerationResult generate(GenerationRequest request) {
         Map<String, String> fileMap = new HashMap<>();
@@ -52,6 +59,14 @@ public class GenerationServiceImpl implements GenerationService {
     }
 
 
+    /**
+     * Resolves the appropriate stack enum for a given core agent type based on its stack category
+     * and the stacks provided in the generation request.
+     *
+     * @param type    the core agent type whose stack category drives selection.
+     * @param request the generation request carrying backend/frontend stack choices.
+     * @return the resolved stack (BackendStack, FrontendStack, or GeneralStack.GENERAL).
+     */
     private Stack determineStack(CoreAgentType type, GenerationRequest request) {
         return switch (type.getStackCategory()) {
             case BACKEND -> request.backendStack();
