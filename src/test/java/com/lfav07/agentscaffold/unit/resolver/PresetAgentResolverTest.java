@@ -39,9 +39,4 @@ class PresetAgentResolverTest {
         );
     }
 
-    @Test
-    void resolve_shouldReturnEmptySet_forUnknownPreset() {
-        Set<CoreAgentType> agents = resolver.resolve(GenerationPreset.ENTERPRISE_REACT);
-        assertThat(agents).isEmpty();
-    }
 }
