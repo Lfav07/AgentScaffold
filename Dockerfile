@@ -2,7 +2,7 @@ FROM maven:3.9.14-amazoncorretto-25 AS build
 WORKDIR /app
 
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
+RUN mvn dependency:go-offline -B --no-transfer-progress
 
 COPY src ./src
 RUN mvn package -DskipTests -B
