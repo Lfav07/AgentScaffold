@@ -52,8 +52,8 @@ jobs:
           push: true
 
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.event.workflow_run.head_sha }}
+            ghcr.io/lfav07/agentscaffold:latest
+            ghcr.io/lfav07/agentscaffold:${{ github.event.workflow_run.head_sha }}
 
           cache-from: type=gha
           cache-to: type=gha,mode=max
