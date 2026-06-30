@@ -33,9 +33,19 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: maven
 
-      #  Build, tests and coverage gate
+      # 3. Build, tests and coverage gate
       - name: Build, tests and coverage gate
         run: mvn -B clean verify --no-transfer-progress
+
+      # 4. Publish test reports
+      - name: Publish test report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: JUnit results
+          path: "**/target/surefire-reports/*.xml,**/target/failsafe-reports/*.xml"
+          reporter: java-junit
+
 
       # 5. Upload coverage artifact
       - name: Upload coverage report
