@@ -11,13 +11,17 @@ env:
   JAVA_VERSION: "25"
   MAVEN_OPTS: "-Xmx1024m"
 
-
+concurrency:
+  group: backend-ci-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build-and-test:
+    name: Build / Test / Coverage
     runs-on: ubuntu-latest
     permissions:
       contents: read
       checks: write
+    timeout-minutes: 20
     steps:
       # 1. Checkout
       - uses: actions/checkout@v4
@@ -39,7 +43,7 @@ jobs:
 
       # 4. Publish test reports
       - name: Publish Test Report
-        if: success() || failure()
+        if: always()
         uses: dorny/test-reporter@v3
         with:
           name: Unit & Integration Tests
@@ -56,3 +60,4 @@ jobs:
         with:
           name: coverage-report
           path: target/site/jacoco/
+          retention-days: 7
