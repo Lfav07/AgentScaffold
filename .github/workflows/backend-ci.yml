@@ -43,9 +43,7 @@ jobs:
         uses: dorny/test-reporter@v3
         with:
           name: Unit & Integration Tests
-          path: |
-            target/surefire-reports/*.xml
-            target/failsafe-reports/*.xml
+          path: "**/TEST-*.xml"
           reporter: java-junit
           list-tests: failed
           fail-on-error: true
