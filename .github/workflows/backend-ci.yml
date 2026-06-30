@@ -38,13 +38,17 @@ jobs:
         run: mvn -B clean verify --no-transfer-progress
 
       # 4. Publish test reports
-      - name: Publish test report
-        uses: dorny/test-reporter@v1
-        if: always()
+      - name: Publish Test Report
+        if: success() || failure()
+        uses: dorny/test-reporter@v3
         with:
-          name: JUnit results
-          path: "**/target/surefire-reports/*.xml,**/target/failsafe-reports/*.xml"
+          name: Unit & Integration Tests
+          path: |
+            target/surefire-reports/*.xml
+            target/failsafe-reports/*.xml
           reporter: java-junit
+          list-tests: failed
+          fail-on-error: true
 
 
       # 5. Upload coverage artifact
