@@ -12,23 +12,23 @@ public class AgentRegistry {
 
     private static final Map<CoreAgentType, AgentItem> CORE = Map.ofEntries(
             Map.entry(CoreAgentType.BACKEND_ARCHITECT,
-                    new AgentItem("backend-architect", "Backend Architect", "Lorem ipsum")),
+                    new AgentItem("backend-architect", "Backend Architect", "Designs backend architecture, project structure, and technology decisions")),
             Map.entry(CoreAgentType.FRONTEND_ARCHITECT,
-                    new AgentItem("frontend-architect", "Frontend Architect", "Lorem ipsum")),
+                    new AgentItem("frontend-architect", "Frontend Architect", "Designs frontend architecture, component tree, and UI/UX decisions")),
             Map.entry(CoreAgentType.BACKEND_ARCHITECT_REVIEWER,
-                    new AgentItem("backend-architect-reviewer", "Backend Architect Reviewer", "Lorem ipsum")),
+                    new AgentItem("backend-architect-reviewer", "Backend Architect Reviewer", "Reviews backend architecture decisions and ensures best practices")),
             Map.entry(CoreAgentType.FRONTEND_ARCHITECT_REVIEWER,
-                    new AgentItem("frontend-architect-reviewer", "Frontend Architect Reviewer", "Lorem ipsum")),
+                    new AgentItem("frontend-architect-reviewer", "Frontend Architect Reviewer", "Reviews frontend architecture decisions and ensures best practices")),
             Map.entry(CoreAgentType.BACKEND_IMPLEMENTER,
-                    new AgentItem("backend-implementer", "Backend Implementer", "Lorem ipsum")),
+                    new AgentItem("backend-implementer", "Backend Implementer", "Implements backend code following the architecture blueprint")),
             Map.entry(CoreAgentType.FRONTEND_IMPLEMENTER,
-                    new AgentItem("frontend-implementer", "Frontend Implementer", "Lorem ipsum")),
+                    new AgentItem("frontend-implementer", "Frontend Implementer", "Implements frontend components following the architecture blueprint")),
             Map.entry(CoreAgentType.BACKEND_TESTER,
-                    new AgentItem("backend-tester", "Backend Tester", "Lorem ipsum")),
+                    new AgentItem("backend-tester", "Backend Tester", "Writes and executes backend tests to ensure reliability")),
             Map.entry(CoreAgentType.FRONTEND_TESTER,
-                    new AgentItem("frontend-tester", "Frontend Tester", "Lorem ipsum")),
+                    new AgentItem("frontend-tester", "Frontend Tester", "Writes and executes frontend tests to ensure reliability")),
             Map.entry(CoreAgentType.FINAL_REVIEWER,
-                    new AgentItem("final-reviewer", "Final Reviewer", "Lorem ipsum"))
+                    new AgentItem("final-reviewer", "Final Reviewer", "Performs cross-stack final review before feature delivery"))
     );
 
     //v2

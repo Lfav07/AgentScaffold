@@ -11,17 +11,17 @@ public class PresetRegistry {
 
     private static final Map<GenerationPreset, PresetItem> PRESETS = Map.ofEntries(
             Map.entry(GenerationPreset.ENTERPRISE_FULLSTACK,
-                    new PresetItem("enterprise-fullstack", "Enterprise Fullstack", "Lorem ipsum")),
+                    new PresetItem("enterprise-fullstack", "Enterprise Fullstack", "Full pipeline, supporting most complex developments")),
             Map.entry(GenerationPreset.ENTERPRISE_SPRING,
-                    new PresetItem("enterprise-spring", "Enterprise Spring", "Lorem ipsum")),
+                    new PresetItem("enterprise-spring", "Enterprise Spring", "Complete backend pipeline for Spring projects with full review and testing")),
             Map.entry(GenerationPreset.ENTERPRISE_REACT,
-                    new PresetItem("enterprise-react", "Enterprise React", "Lorem ipsum")),
+                    new PresetItem("enterprise-react", "Enterprise React", "Complete frontend pipeline for React projects with full review and testing")),
             Map.entry(GenerationPreset.STARTUP_READY,
-                    new PresetItem("startup-ready", "Startup Ready", "Lorem ipsum")),
+                    new PresetItem("startup-ready", "Startup Ready", "Fast-paced fullstack setup for startups, covering both frontend and backend essentials")),
             Map.entry(GenerationPreset.REACT_READY,
-                    new PresetItem("react-ready", "React Ready", "Lorem ipsum")),
+                    new PresetItem("react-ready", "React Ready", "Streamlined frontend setup for rapid React development")),
             Map.entry(GenerationPreset.SPRING_READY,
-                    new PresetItem("spring-ready", "Spring Ready", "Lorem ipsum"))
+                    new PresetItem("spring-ready", "Spring Ready", "Streamlined backend setup for rapid Spring development"))
     );
 
     public  Set<PresetItem> getPresets() {
