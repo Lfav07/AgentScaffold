@@ -18,6 +18,13 @@ public enum BackendStack implements  Stack {
     @Override
     public String getId(){return  id;}
 
+    /**
+     * Resolves a case-insensitive string value to the corresponding backend stack constant.
+     *
+     * @param value the string value to resolve (may be null or malformed).
+     * @return the matching BackendStack constant.
+     * @throws InvalidStackException if no match is found or the value is null.
+     */
     @JsonCreator
     public static BackendStack fromValue(String value) {
         if (value == null) {

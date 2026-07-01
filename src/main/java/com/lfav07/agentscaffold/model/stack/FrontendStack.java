@@ -17,6 +17,13 @@ public enum FrontendStack implements  Stack {
 
 
 
+    /**
+     * Resolves a case-insensitive string value to the corresponding frontend stack constant.
+     *
+     * @param value the string value to resolve (may be null or malformed).
+     * @return the matching FrontendStack constant.
+     * @throws InvalidStackException if no match is found or the value is null.
+     */
     @JsonCreator
     public static FrontendStack fromValue(String value) {
         if (value == null) {

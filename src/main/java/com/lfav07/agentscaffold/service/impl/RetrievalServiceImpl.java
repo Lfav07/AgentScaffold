@@ -9,12 +9,14 @@ import com.lfav07.agentscaffold.registry.PresetRegistry;
 import com.lfav07.agentscaffold.registry.StackRegistry;
 import com.lfav07.agentscaffold.service.RetrievalService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RetrievalServiceImpl implements RetrievalService {
@@ -25,7 +27,9 @@ public class RetrievalServiceImpl implements RetrievalService {
 
     @Override
     public Set<AgentItem> getCoreAgentsAvailable() {
-       return agentRegistry.getCoreAgents();
+        Set<AgentItem> agents = agentRegistry.getCoreAgents();
+        log.debug("Returning {} core agents", agents.size());
+        return agents;
     }
 
     @Override
@@ -33,21 +37,29 @@ public class RetrievalServiceImpl implements RetrievalService {
         Map<String, Set<StackItem>> result = new HashMap<>();
         result.put(appProperties.stacks().categoryLabels().backend(), getBackendStacksAvailable());
         result.put(appProperties.stacks().categoryLabels().frontend(), getFrontendStacksAvailable());
+        int total = result.values().stream().mapToInt(Set::size).sum();
+        log.debug("Returning {} stacks across all categories", total);
         return result;
     }
 
     @Override
     public Set<StackItem> getBackendStacksAvailable() {
-        return stackRegistry.getBackendStacks();
+        Set<StackItem> stacks = stackRegistry.getBackendStacks();
+        log.debug("Returning {} backend stacks", stacks.size());
+        return stacks;
     }
 
     @Override
     public Set<StackItem> getFrontendStacksAvailable() {
-        return stackRegistry.getFrontendStacks();
+        Set<StackItem> stacks = stackRegistry.getFrontendStacks();
+        log.debug("Returning {} frontend stacks", stacks.size());
+        return stacks;
     }
 
     @Override
     public Set<PresetItem> getPresetsAvailable(){
-        return presetRegistry.getPresets();
+        Set<PresetItem> presets = presetRegistry.getPresets();
+        log.debug("Returning {} presets", presets.size());
+        return presets;
     }
 }

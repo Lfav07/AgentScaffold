@@ -3,8 +3,13 @@ package com.lfav07.agentscaffold.controller;
 import com.lfav07.agentscaffold.dto.GenerationRequest;
 import com.lfav07.agentscaffold.dto.GenerationResult;
 import com.lfav07.agentscaffold.service.GenerationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -13,15 +18,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
-@CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "Generation", description = "Agent generation endpoints")
 public class GenerationController {
     private final GenerationService generationService;
 
+    @Operation(summary = "Generate project scaffold", description = "Generates a complete project scaffold as a ZIP file based on the provided configuration (preset, stacks, agents).")
+    @ApiResponse(responseCode = "200", description = "ZIP file containing the generated project scaffold",
+            content = @Content(mediaType = "application/zip"))
+    @ApiResponse(responseCode = "400", description = "Invalid request parameters or configuration")
     @PostMapping("/scaffold")
     public ResponseEntity<Resource> scaffold(@Valid @RequestBody GenerationRequest request){
+        log.info("Generation request received — project: {}, preset: {}, backend: {}, frontend: {}",
+                request.projectName(), request.preset(), request.backendStack(), request.frontendStack());
         GenerationResult result =  generationService.generate(request);
         byte[] zip = result.zip();
         ByteArrayResource resource = new ByteArrayResource(zip);
