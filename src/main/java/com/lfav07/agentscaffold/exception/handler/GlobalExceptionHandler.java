@@ -60,6 +60,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
+        log.warn("Validation failed — uri: {}", request.getRequestURI(), e);
         String message = e.getBindingResult().getFieldErrors().stream()
                 .findFirst()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -69,11 +70,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiErrorResponse> handleMalformedJson(HttpMessageNotReadableException e, HttpServletRequest request) {
+        log.warn("Malformed JSON — uri: {}", request.getRequestURI(), e);
         return buildError(HttpStatus.BAD_REQUEST, "Malformed request body", request);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleNotFound(NoHandlerFoundException e, HttpServletRequest request) {
+        log.warn("Resource not found — uri: {}", request.getRequestURI(), e);
         return buildError(HttpStatus.NOT_FOUND, "Resource not found", request);
     }
 

@@ -5,6 +5,7 @@ import com.lfav07.agentscaffold.dto.GenerationResult;
 import com.lfav07.agentscaffold.service.GenerationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -13,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
@@ -27,6 +29,8 @@ public class GenerationController {
      */
     @PostMapping("/scaffold")
     public ResponseEntity<Resource> scaffold(@Valid @RequestBody GenerationRequest request){
+        log.info("Generation request received — project: {}, preset: {}, backend: {}, frontend: {}",
+                request.projectName(), request.preset(), request.backendStack(), request.frontendStack());
         GenerationResult result =  generationService.generate(request);
         byte[] zip = result.zip();
         ByteArrayResource resource = new ByteArrayResource(zip);

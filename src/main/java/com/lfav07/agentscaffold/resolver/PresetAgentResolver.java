@@ -2,11 +2,13 @@ package com.lfav07.agentscaffold.resolver;
 
 import com.lfav07.agentscaffold.model.agent.CoreAgentType;
 import com.lfav07.agentscaffold.model.preset.GenerationPreset;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Set;
 
+@Slf4j
 @Component
 public class PresetAgentResolver {
 
@@ -60,6 +62,8 @@ public class PresetAgentResolver {
             );
 
     public Set<CoreAgentType> resolve(GenerationPreset preset) {
-        return PRESET_AGENTS.getOrDefault(preset, Set.of());
+        Set<CoreAgentType> agents = PRESET_AGENTS.getOrDefault(preset, Set.of());
+        log.debug("Preset {} resolved to {} agents", preset, agents.size());
+        return agents;
     }
 }

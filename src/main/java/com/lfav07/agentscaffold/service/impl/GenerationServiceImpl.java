@@ -14,12 +14,14 @@ import com.lfav07.agentscaffold.service.GenerationService;
 import com.lfav07.agentscaffold.util.TemplateEngine;
 import com.lfav07.agentscaffold.util.ZipGenerator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GenerationServiceImpl implements GenerationService {
@@ -38,12 +40,15 @@ public class GenerationServiceImpl implements GenerationService {
      */
     @Override
     public GenerationResult generate(GenerationRequest request) {
+        log.info("Generation started — preset: {}", request.preset());
         Map<String, String> fileMap = new HashMap<>();
         Set<CoreAgentType> presetAgents = presetAgentResolver.resolve(request.preset());
+        log.debug("Preset {} resolved to {} agents", request.preset(), presetAgents.size());
         for (CoreAgentType type : presetAgents) {
             Stack stack = determineStack(type, request);
             AgentExecutionUnit unit = new AgentExecutionUnit(type, stack);
             AgentRenderContext context = contextResolver.resolve(unit, request.projectName());
+            log.debug("Processing agent: {}", type);
             String agentContent = templateEngine.buildAgent(unit, context);
             fileMap.put(unit.resolveOutputFileName(), agentContent);
         }
@@ -52,6 +57,7 @@ public class GenerationServiceImpl implements GenerationService {
                 .trim()
                 .replaceAll(appProperties.generation().sanitizeRegex(), "-");
 
+        log.info("Generation completed — project: {}, total size: {} bytes", request.projectName(), zip.length);
         return new GenerationResult(
                 zip,
                 filename + appProperties.generation().zipSuffix()

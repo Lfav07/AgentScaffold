@@ -5,12 +5,14 @@ import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.exception.TemplateNotFoundException;
 import com.samskivert.mustache.Mustache;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class TemplateEngine {
     private final AppProperties appProperties;
@@ -34,6 +36,8 @@ public class TemplateEngine {
         String templateContent =
                 loadTemplate(executionUnit.resolveTemplateFileName());
 
+        log.debug("Template rendered for agent: {}", executionUnit.type());
+
         return Mustache.compiler()
                 .compile(templateContent)
                 .execute(Map.of(
@@ -51,6 +55,7 @@ public class TemplateEngine {
      */
     private String loadTemplate(String filePath){
         ClassPathResource finalPath = new ClassPathResource(appProperties.paths().templates() + "/" + filePath);
+        log.debug("Template loaded: {}", filePath);
         String content;
         try {
             content = finalPath.getContentAsString(StandardCharsets.UTF_8);

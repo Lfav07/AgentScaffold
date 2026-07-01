@@ -1,6 +1,7 @@
 package com.lfav07.agentscaffold.util;
 
 import com.lfav07.agentscaffold.exception.ZipGenerationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+@Slf4j
 @Component
 public class ZipGenerator {
 
@@ -34,7 +36,9 @@ public class ZipGenerator {
             throw new ZipGenerationException("Failed to generate zip", e);
         }
 
-        return baos.toByteArray();
+        byte[] result = baos.toByteArray();
+        log.info("ZIP generated — {} files, {} bytes", files.size(), result.length);
+        return result;
     }
 }
 
