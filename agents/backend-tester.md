@@ -45,8 +45,6 @@ not implementation details.
     - Identify observable outcomes.
     - Decide the minimal set of test cases.
 
-1. ENTENDA:
-   - 
 2. IDENTIFY all behaviors that require verification:
     - happy paths
     - edge cases
