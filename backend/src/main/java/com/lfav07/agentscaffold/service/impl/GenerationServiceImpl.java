@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class GenerationServiceImpl implements GenerationService {
      */
     @Override
     public GenerationResult generate(GenerationRequest request) {
+        long start = System.nanoTime();
         log.info("Generation started — preset: {}", request.preset());
         Map<String, String> fileMap = new HashMap<>();
         Set<CoreAgentType> presetAgents = presetAgentResolver.resolve(request.preset());
@@ -57,7 +59,10 @@ public class GenerationServiceImpl implements GenerationService {
                 .trim()
                 .replaceAll(appProperties.generation().sanitizeRegex(), "-");
 
-        log.info("Generation completed — project: {}, total size: {} bytes", request.projectName(), zip.length);
+
+        long durationMs = Duration.ofNanos(System.nanoTime() - start).toMillis();
+
+        log.info("Generation completed — project: {}, total size: {} bytes, duration: {} ms", request.projectName(), zip.length, durationMs);
         return new GenerationResult(
                 zip,
                 filename + appProperties.generation().zipSuffix()
