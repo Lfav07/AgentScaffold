@@ -1,6 +1,8 @@
 import Header from "../../../shared/components/Header/Header";
 import Hero from "@/features/home/components/Hero";
 import HowItWorks from "@/features/home/components/HowItWorks";
+import ProductPreview from "@/features/home/components/ProductPreview.tsx";
+import Features from "@/features/home/components/Features.tsx";
 
 export default function HomePage() {
   return (
@@ -8,7 +10,9 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
+          <ProductPreview />
         <HowItWorks />
+          <Features></Features>
       </main>
     </>
   );
