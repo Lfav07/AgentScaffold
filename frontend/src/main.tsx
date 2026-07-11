@@ -4,12 +4,14 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import {BrowserRouter, Route, Routes} from "react-router";
 import HomePage from "./features/home/pages/HomePage.tsx";
+import GenerationPage from "@/features/generation/pages/GenerationPage.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <BrowserRouter>
           <Routes>
-              <Route index element={<HomePage></HomePage>}></Route>
+              <Route path={'/'} element={<HomePage></HomePage>} />
+              <Route path={'/generate'} element={<GenerationPage />}/>
           </Routes>
       </BrowserRouter>
   </StrictMode>,
