@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 
 const navItems = [
-  { to: "/Home", label: "Home" },
+  { to: "/", label: "Home" },
   { to: "/generate", label: "Generate" },
   { to: "/presets", label: "Presets" },
   { to: "/agents", label: "Agents" },
