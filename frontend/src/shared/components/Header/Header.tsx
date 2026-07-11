@@ -18,7 +18,7 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)]">
+    <header className="sticky top-0 z-50 w-full">
       <div className="absolute inset-0 bg-[var(--bg)]/80 backdrop-blur-xl" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/50 to-transparent" />
 

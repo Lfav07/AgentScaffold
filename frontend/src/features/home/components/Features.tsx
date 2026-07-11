@@ -23,7 +23,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="border-t border-[var(--border)] py-20 sm:py-28">
+    <section className=" py-20 sm:py-28">
       <div className="mx-auto max-w-5xl px-4">
         <h2 className="text-center text-3xl font-bold tracking-tight text-[var(--text-h)] sm:text-4xl">
           Built for Real Workflows

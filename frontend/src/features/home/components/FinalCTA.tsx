@@ -4,7 +4,7 @@ import {useNavigate} from "react-router";
 export default function FinalCTA() {
     let navigate = useNavigate();
     return (
-    <section  className="relative flex flex-col items-center gap-6 overflow-hidden border-t border-[var(--border)] px-4 py-20 sm:py-28">
+    <section  className="relative flex flex-col items-center gap-6 overflow-hidden  px-4 py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 bg-[length:32px_32px] opacity-[0.03] [background-image:radial-gradient(circle,var(--accent)_1px,transparent_1px)]" />
       <div className="pointer-events-none absolute -bottom-48 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-[var(--accent)]/8 blur-3xl" />
 
