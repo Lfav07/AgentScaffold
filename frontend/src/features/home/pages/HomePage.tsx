@@ -4,17 +4,19 @@ import HowItWorks from "@/features/home/components/HowItWorks";
 
 import Features from "@/features/home/components/Features";
 import FinalCTA from "@/features/home/components/FinalCTA";
+import ProductPreview from "@/features/home/components/ProductPreview.tsx";
 
 export default function HomePage() {
-  return (
-   <div className={"bg-gradient-to-r from-white to-[#abbaab]"}>
-      <Header />
-      <main >
-        <Hero />
-        <HowItWorks />
-        <Features />
-        <FinalCTA />
-      </main>
-   </div>
-  );
+    return (
+        <div className={"bg-gradient-to-r from-white to-[#abbaab]"}>
+            <Header/>
+            <main>
+                <Hero/>
+                <ProductPreview/>
+                <HowItWorks/>
+                <Features/>
+                <FinalCTA/>
+            </main>
+        </div>
+    );
 }
