@@ -1,8 +1,9 @@
 import Header from "../../../shared/components/Header/Header";
 import Hero from "@/features/home/components/Hero";
 import HowItWorks from "@/features/home/components/HowItWorks";
-import ProductPreview from "@/features/home/components/ProductPreview.tsx";
-import Features from "@/features/home/components/Features.tsx";
+import ProductPreview from "@/features/home/components/ProductPreview";
+import Features from "@/features/home/components/Features";
+import FinalCTA from "@/features/home/components/FinalCTA";
 
 export default function HomePage() {
   return (
@@ -10,9 +11,10 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
-          <ProductPreview />
+        <ProductPreview />
         <HowItWorks />
-          <Features></Features>
+        <Features />
+        <FinalCTA />
       </main>
     </>
   );
