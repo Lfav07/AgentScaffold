@@ -20,7 +20,7 @@ export default function GenerationPage() {
     return (
         <div className={"bg-gradient-to-r from-white to-[#abbaab]"}>
             <Header/>
-            <main className={"h-screen"}>
+            <main className={"min-h-screen"}>
                 <div className={"w-screen mx-auto h-200 bg-red-200 flex m-10 flex-col items-center align-center"}>
                     <ProgressIndicator step={currentStep}></ProgressIndicator>
                     <h2>Future multi step form here!</h2>
