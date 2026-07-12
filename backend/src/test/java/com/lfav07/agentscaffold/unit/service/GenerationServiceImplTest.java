@@ -66,7 +66,7 @@ class GenerationServiceImplTest {
                 GenerationPreset.ENTERPRISE_SPRING,
                 "Test",
                 BackendStack.JAVA_SPRING,
-                FrontendStack.TYPESCRIPT_REACT,
+                null,
                 null,
                 null
         );
@@ -184,7 +184,15 @@ class GenerationServiceImplTest {
         when(templateEngine.buildAgent(any(), any())).thenReturn("content");
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
-        generationService.generate(defaultRequest);
+        GenerationRequest request = new GenerationRequest(
+                GenerationPreset.ENTERPRISE_REACT,
+                "Test",
+                null,
+                FrontendStack.TYPESCRIPT_REACT,
+                null,
+                null
+        );
+        generationService.generate(request);
 
         verify(contextResolver).resolve(executionUnitCaptor.capture(), any());
         assertThat(executionUnitCaptor.getValue().type()).isEqualTo(CoreAgentType.FRONTEND_ARCHITECT);
@@ -205,5 +213,84 @@ class GenerationServiceImplTest {
         verify(contextResolver).resolve(executionUnitCaptor.capture(), any());
         assertThat(executionUnitCaptor.getValue().type()).isEqualTo(CoreAgentType.FINAL_REVIEWER);
         assertThat(executionUnitCaptor.getValue().stack()).isEqualTo(GeneralStack.GENERAL);
+    }
+
+    @Test
+    void generate_shouldNotRequireFrontendStack_forBackendOnlyPreset() {
+        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(
+                CoreAgentType.BACKEND_ARCHITECT,
+                CoreAgentType.BACKEND_IMPLEMENTER,
+                CoreAgentType.BACKEND_TESTER
+        ));
+        when(contextResolver.resolve(any(), any())).thenReturn(
+                new AgentRenderContext("Test", "definition")
+        );
+        when(templateEngine.buildAgent(any(), any())).thenReturn("content");
+        when(zipGenerator.generate(any())).thenReturn(new byte[0]);
+
+        GenerationRequest request = new GenerationRequest(
+                GenerationPreset.ENTERPRISE_SPRING,
+                "Test",
+                BackendStack.JAVA_SPRING,
+                null,
+                null,
+                null
+        );
+
+        GenerationResult result = generationService.generate(request);
+
+        assertThat(result.zip()).isNotNull();
+    }
+
+    @Test
+    void generate_shouldNotRequireBackendStack_forFrontendOnlyPreset() {
+        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(
+                CoreAgentType.FRONTEND_ARCHITECT,
+                CoreAgentType.FRONTEND_IMPLEMENTER,
+                CoreAgentType.FRONTEND_TESTER
+        ));
+        when(contextResolver.resolve(any(), any())).thenReturn(
+                new AgentRenderContext("Test", "definition")
+        );
+        when(templateEngine.buildAgent(any(), any())).thenReturn("content");
+        when(zipGenerator.generate(any())).thenReturn(new byte[0]);
+
+        GenerationRequest request = new GenerationRequest(
+                GenerationPreset.ENTERPRISE_REACT,
+                "Test",
+                null,
+                FrontendStack.TYPESCRIPT_REACT,
+                null,
+                null
+        );
+
+        GenerationResult result = generationService.generate(request);
+
+        assertThat(result.zip()).isNotNull();
+    }
+
+    @Test
+    void generate_shouldHandleGeneralOnlyPreset_withBothStacksNull() {
+        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(
+                CoreAgentType.FINAL_REVIEWER
+        ));
+        when(contextResolver.resolve(any(), any())).thenReturn(
+                new AgentRenderContext("Test", "definition")
+        );
+        when(templateEngine.buildAgent(any(), any())).thenReturn("content");
+        when(zipGenerator.generate(any())).thenReturn(new byte[0]);
+
+        GenerationRequest request = new GenerationRequest(
+                GenerationPreset.ENTERPRISE_REACT,
+                "Test",
+                null,
+                null,
+                null,
+                null
+        );
+
+        GenerationResult result = generationService.generate(request);
+
+        assertThat(result.zip()).isNotNull();
     }
 }
