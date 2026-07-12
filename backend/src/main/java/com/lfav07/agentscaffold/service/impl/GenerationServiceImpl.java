@@ -5,7 +5,10 @@ import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.dto.GenerationRequest;
 import com.lfav07.agentscaffold.dto.GenerationResult;
+import com.lfav07.agentscaffold.exception.InvalidStackException;
 import com.lfav07.agentscaffold.model.agent.CoreAgentType;
+import com.lfav07.agentscaffold.model.stack.BackendStack;
+import com.lfav07.agentscaffold.model.stack.FrontendStack;
 import com.lfav07.agentscaffold.model.stack.GeneralStack;
 import com.lfav07.agentscaffold.model.stack.Stack;
 import com.lfav07.agentscaffold.resolver.ContextResolver;
@@ -80,8 +83,16 @@ public class GenerationServiceImpl implements GenerationService {
      */
     private Stack determineStack(CoreAgentType type, GenerationRequest request) {
         return switch (type.getStackCategory()) {
-            case BACKEND -> request.backendStack();
-            case FRONTEND -> request.frontendStack();
+            case BACKEND -> {
+                BackendStack bs = request.backendStack();
+                if (bs == null) throw new InvalidStackException("Backend stack not provided");
+                yield bs;
+            }
+            case FRONTEND -> {
+                FrontendStack fs = request.frontendStack();
+                if (fs == null) throw new InvalidStackException("Frontend stack not provided");
+                yield fs;
+            }
             case GENERAL -> GeneralStack.GENERAL;
         };
     }

@@ -61,6 +61,36 @@ class ErrorHandlingIT {
     }
 
     @Test
+    void scaffold_shouldReturn400_whenFullstackPresetMissingBackendStack() throws Exception {
+        mockMvc.perform(post("/api/v1/scaffold")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "preset": "enterprise-fullstack",
+                                    "projectName": "MyProject",
+                                    "frontendStack": "typescript-react"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
+    }
+
+    @Test
+    void scaffold_shouldReturn400_whenFullstackPresetMissingFrontendStack() throws Exception {
+        mockMvc.perform(post("/api/v1/scaffold")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "preset": "enterprise-fullstack",
+                                    "projectName": "MyProject",
+                                    "backendStack": "java-spring"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
+    }
+
+    @Test
     void getUnknownRoute_shouldReturn404() throws Exception {
         mockMvc.perform(get("/api/v1/nonexistent"))
                 .andExpect(status().isNotFound())

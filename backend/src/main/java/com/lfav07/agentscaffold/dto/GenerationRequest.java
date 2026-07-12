@@ -1,5 +1,6 @@
 package com.lfav07.agentscaffold.dto;
 
+import com.lfav07.agentscaffold.dto.validation.ValidGenerationRequest;
 import com.lfav07.agentscaffold.model.agent.AdditionalAgentType;
 import com.lfav07.agentscaffold.model.agent.CoreAgentType;
 import com.lfav07.agentscaffold.model.preset.GenerationPreset;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 
 @Schema(description = "Request payload to generate a new project scaffold")
+@ValidGenerationRequest
 public record GenerationRequest(
         @NotNull
         @Schema(description = "Generation preset to use", example = "Enterprise-fullstack")
@@ -21,12 +23,12 @@ public record GenerationRequest(
         @Schema(description = "Name of the project to scaffold", example = "my-app")
         String projectName,
 
-        @NotNull
-        @Schema(description = "Backend technology stack", example = "JAVA_SPRING")
+        @Schema(description = "Backend technology stack", example = "JAVA_SPRING",
+                nullable = true, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         BackendStack backendStack,
 
-        @NotNull
-        @Schema(description = "Frontend technology stack", example = "TYPESCRIPT_REACT")
+        @Schema(description = "Frontend technology stack", example = "TYPESCRIPT_REACT",
+                nullable = true, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         FrontendStack frontendStack,
 
         @Schema(description = "Optional custom core agent types to include")
