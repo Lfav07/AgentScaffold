@@ -26,5 +26,10 @@ export const generationRequestSchema = z.object(
         frontendStack: z.optional(FrontendStackEnum)
     }
 )
-
+export const stepFields: Record<number, (keyof GenerationRequestType)[]> = {
+    0: ["projectName"],
+    1: ["preset"],
+    2: ["backendStack"],
+    3: ["frontendStack"]
+} as const;
 export type GenerationRequestType = z.infer<typeof generationRequestSchema>;
