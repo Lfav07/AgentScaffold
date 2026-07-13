@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-const PresetEnum = z.enum([
+export const PresetEnum = z.enum([
     "enterprise-fullstack",
     "enterprise-spring",
     "enterprise-react",
@@ -8,10 +8,10 @@ const PresetEnum = z.enum([
     "spring-ready",
     "react-ready"
 ])
-const BackendStackEnum = z.enum([
+export const BackendStackEnum = z.enum([
     "java-spring"
 ])
-const FrontendStackEnum = z.enum([
+export const FrontendStackEnum = z.enum([
     "typescript-react"
 ])
 
