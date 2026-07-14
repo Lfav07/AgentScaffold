@@ -2,7 +2,7 @@ import {useFormContext} from "react-hook-form";
 import type {GenerationRequestType} from "@/features/generation/schemas.ts";
 
 export default function ProjectNameStep(){
-    const {register} = useFormContext<GenerationRequestType>()
+    const {register, formState: {errors}} = useFormContext<GenerationRequestType>()
     return (
         <div className="flex flex-col items-center text-center gap-4">
             <h1 className="text-3xl font-bold tracking-tight text-[var(--text-h)] sm:text-4xl">
@@ -17,8 +17,11 @@ export default function ProjectNameStep(){
                 </span>
                 <input
                     {...register("projectName")}
-                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 p-3 text-sm text-[var(--text)] outline-none transition-all duration-200 focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 p-3 text-sm text-[var(--text)] placeholder:text-[var(--text)]/40 outline-none transition-all duration-200 focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20"
                 />
+                {errors.projectName?.message && (
+                    <span className="text-xs text-red-400">{errors.projectName.message}</span>
+                )}
             </label>
         </div>
     );
