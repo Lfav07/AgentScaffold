@@ -40,7 +40,7 @@ export default function StackStep({backendStacks, frontendStacks}: StackStepProp
     return (
         <div className="flex flex-col items-center text-center gap-4">
             <h1 className="text-3xl font-bold tracking-tight text-[var(--text-h)] sm:text-4xl">
-                Step 2: Stacks
+                Step 3: Stacks
             </h1>
             <p className="max-w-lg text-balance text-base leading-relaxed text-[var(--text)]">
                 Choose your desired stacks. The stacks chosen may be used to customize the generated agents.

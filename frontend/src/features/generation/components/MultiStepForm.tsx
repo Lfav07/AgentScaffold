@@ -10,6 +10,7 @@ import PresetStep from "@/features/generation/components/steps/PresetStep.tsx";
 import {usePresets} from "@/features/presets/components/presetsHooks.ts";
 import {useStacks} from "@/features/stacks/hooks/stacksHooks.ts";
 import StackStep from "@/features/generation/components/steps/StackStep.tsx";
+import PreviewStep from "@/features/generation/components/steps/PreviewStep.tsx";
 
 export default function MultiStepForm() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -43,7 +44,8 @@ export default function MultiStepForm() {
     const steps = [
         <ProjectNameStep key="project"/>,
         <PresetStep key={"preset"} presetsList={presets.data}/>,
-        <StackStep  key={"stack"} backendStacks={stacks.data.backend} frontendStacks={stacks.data.frontend}/>
+        <StackStep  key={"stack"} backendStacks={stacks.data.backend} frontendStacks={stacks.data.frontend}/>,
+        <PreviewStep key="preview" presetsList={presets.data} backendStacks={stacks.data.backend} frontendStacks={stacks.data.frontend}/>,
     ];
 
     const isLastStep = currentStep === steps.length - 1;

@@ -39,5 +39,6 @@ export const stepFields: Record<number, (keyof GenerationRequestType)[]> = {
     0: ["projectName"],
     1: ["preset"],
     2: ["backendStack", "frontendStack"],
+    3: [],
 } as const;
 export type GenerationRequestType = z.infer<typeof generationRequestSchema>;
