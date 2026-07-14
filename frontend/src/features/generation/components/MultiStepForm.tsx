@@ -6,11 +6,11 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import ProjectNameStep from "@/features/generation/components/steps/ProjectNameStep.tsx";
 import {useGeneration} from "@/features/generation/hooks/generationHooks.ts";
 import {Button} from "@/components/ui/button";
+import PresetStep from "@/features/generation/components/steps/PresetStep.tsx";
+import {usePresets} from "@/features/presets/components/presetsHooks.ts";
 
-export default function MultiStepForm(){
+export default function MultiStepForm() {
     const [currentStep, setCurrentStep] = useState(0);
-    const nextStep = () => setCurrentStep((step) => step + 1);
-    const previousStep = () => setCurrentStep((step) => step - 1);
     const generate = useGeneration();
     const form = useForm<GenerationRequestType>({
         resolver: zodResolver(generationRequestSchema),
@@ -21,9 +21,19 @@ export default function MultiStepForm(){
             frontendStack: undefined,
         }
     });
+    const presets = usePresets()
+    if (presets.isPending) {
+        return <p>Loading...</p>;
+    }
+
+    if (presets.error) {
+        return <p>Something went wrong.</p>;
+    }
     const steps = [
-        <ProjectNameStep key="project" />
+        <ProjectNameStep key="project"/>,
+        <PresetStep key={"preset"} presetsList={presets.data}/>
     ];
+
     const isLastStep = currentStep === steps.length - 1;
 
     async function handleNext() {
@@ -35,6 +45,7 @@ export default function MultiStepForm(){
     function handleBack() {
         setCurrentStep((s) => Math.max(0, s - 1));
     }
+
     const onSubmit: SubmitHandler<GenerationRequestType> = (data) => generate.mutate(data)
 
     const btnClass = "h-10 rounded-xl border-0 bg-emerald-900 px-6 text-sm font-semibold text-white shadow-lg shadow-[var(--accent)]/25 transition-all duration-200 hover:bg-emerald-400/85 hover:shadow-[var(--accent)]/35 hover:scale-[1.02] active:scale-[0.98]";
@@ -42,7 +53,7 @@ export default function MultiStepForm(){
     return (
         <section className="mx-auto max-w-5xl px-4 py-20 sm:py-28">
             <div className="flex flex-col items-center gap-8">
-                <ProgressIndicator step={currentStep} />
+                <ProgressIndicator step={currentStep}/>
                 <FormProvider {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-6">
                         {steps[currentStep]}
