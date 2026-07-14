@@ -25,7 +25,6 @@ export default function MultiStepForm() {
     });
     const presets = usePresets()
     const stacks = useStacks()
-    console.log(stacks)
     if (presets.isPending) {
         return <p>Loading...</p>;
     }
@@ -66,7 +65,7 @@ export default function MultiStepForm() {
     return (
         <section className="mx-auto max-w-5xl px-4 py-20 sm:py-28">
             <div className="flex flex-col items-center gap-8">
-                <ProgressIndicator step={currentStep}/>
+                <ProgressIndicator step={currentStep} totalSteps={steps.length}/>
                 <FormProvider {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-6">
                         {steps[currentStep]}

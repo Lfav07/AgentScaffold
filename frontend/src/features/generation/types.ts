@@ -1,3 +1,4 @@
-export type  formSteps={
-    step: number
+export type formSteps = {
+    step: number;
+    totalSteps?: number;
 }
