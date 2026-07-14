@@ -8,6 +8,8 @@ import {useGeneration} from "@/features/generation/hooks/generationHooks.ts";
 import {Button} from "@/components/ui/button";
 import PresetStep from "@/features/generation/components/steps/PresetStep.tsx";
 import {usePresets} from "@/features/presets/components/presetsHooks.ts";
+import {useStacks} from "@/features/stacks/hooks/stacksHooks.ts";
+import StackStep from "@/features/generation/components/steps/StackStep.tsx";
 
 export default function MultiStepForm() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -22,6 +24,8 @@ export default function MultiStepForm() {
         }
     });
     const presets = usePresets()
+    const stacks = useStacks()
+    console.log(stacks)
     if (presets.isPending) {
         return <p>Loading...</p>;
     }
@@ -29,9 +33,18 @@ export default function MultiStepForm() {
     if (presets.error) {
         return <p>Something went wrong.</p>;
     }
+    if (stacks.isPending) {
+        return <p>Loading...</p>;
+    }
+
+    if (stacks.error) {
+        return <p>Something went wrong.</p>;
+    }
+
     const steps = [
         <ProjectNameStep key="project"/>,
-        <PresetStep key={"preset"} presetsList={presets.data}/>
+        <PresetStep key={"preset"} presetsList={presets.data}/>,
+        <StackStep  key={"stack"} backendStacks={stacks.data.backend} frontendStacks={stacks.data.frontend}/>
     ];
 
     const isLastStep = currentStep === steps.length - 1;
@@ -70,8 +83,8 @@ export default function MultiStepForm() {
                                     Next
                                 </Button>
                             ) : (
-                                <Button type="submit" size="lg" className={btnClass}>
-                                    Submit
+                                <Button type="button" size="lg" className={btnClass} onClick={() => form.handleSubmit(onSubmit)()}>
+                                Submit
                                 </Button>
                             )}
                         </div>
