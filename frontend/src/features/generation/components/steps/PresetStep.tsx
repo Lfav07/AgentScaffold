@@ -1,13 +1,22 @@
 import {useFormContext} from "react-hook-form";
 import type {GenerationRequestType} from "@/features/generation/schemas.ts";
 import type {Preset} from "@/shared/types.ts";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 type PresetStepProps = {
     presetsList: Preset[];
 };
 export default function PresetStep({ presetsList }: PresetStepProps) {
-    const {register} = useFormContext<GenerationRequestType>()
-    const listItems = presetsList.map(preset => <option key={preset.id} value={preset.id}>{preset.name}</option>)
+    const {setValue, watch} = useFormContext<GenerationRequestType>()
+    const selectedPreset = watch("preset")
+    const sortedPresets = [...presetsList].sort((a, b) => a.name.localeCompare(b.name))
+    const presetName = sortedPresets.find(p => p.id === selectedPreset)?.name
     return (
         <div className="flex flex-col items-center text-center gap-4">
             <h1 className="text-3xl font-bold tracking-tight text-[var(--text-h)] sm:text-4xl">
@@ -21,13 +30,23 @@ export default function PresetStep({ presetsList }: PresetStepProps) {
                 <span className="text-sm font-semibold text-[var(--text-h)]">
                     Preset
                 </span>
-                <select
-                    {...register("preset")}
-                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 p-3 text-sm text-[var(--text)] outline-none transition-all duration-200 focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20"
+                <Select 
+                    value={selectedPreset ?? ""}
+                    onValueChange={(val) => { if (val) setValue("preset", val); }}
                 >
-                    <option value="" disabled>Select a preset...</option>
-                    {listItems}
-                </select>
+                    <SelectTrigger className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
+                        <SelectValue placeholder="Select a preset...">
+                            {presetName}
+                        </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {sortedPresets.map((preset) => (
+                            <SelectItem key={preset.id} value={preset.id}>
+                                {preset.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </label>
         </div>
     );
