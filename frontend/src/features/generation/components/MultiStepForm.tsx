@@ -12,7 +12,8 @@ import {useStacks} from "@/features/stacks/hooks/stacksHooks.ts";
 import StackStep from "@/features/generation/components/steps/StackStep.tsx";
 import PreviewStep from "@/features/generation/components/steps/PreviewStep.tsx";
 import SuccessView from "@/features/generation/components/SuccessView.tsx";
-import {LoaderCircle} from "lucide-react";
+import LoadingView from "@/features/generation/components/LoadingView.tsx";
+import ErrorView from "@/features/generation/components/ErrorView.tsx";
 
 export default function MultiStepForm() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -31,29 +32,22 @@ export default function MultiStepForm() {
     const presets = usePresets()
     const stacks = useStacks()
     if (presets.isPending) {
-        return <p>Loading...</p>;
+        return <LoadingView message={"Loading presets..."} />;
     }
 
     if (presets.error) {
-        return <p>Something went wrong.</p>;
+        return <ErrorView message={"Could not load presets. Please try again."} />;
     }
     if (stacks.isPending) {
-        return <p>Loading...</p>;
+        return <LoadingView message={"Loading stacks..."} />;
     }
 
     if (stacks.error) {
-        return <p>Something went wrong.</p>;
+        return <ErrorView message={"Could not load stacks. Please try again."} />;
     }
 
     if (generate.isPending) {
-        return (
-            <section className="relative flex flex-col items-center justify-center gap-6 px-4 py-24 sm:py-32">
-                <div className="pointer-events-none absolute inset-0 bg-[length:32px_32px] opacity-[0.04] [background-image:radial-gradient(circle,var(--accent)_1px,transparent_1px)]" />
-                <div className="pointer-events-none absolute -top-48 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-[var(--accent)]/8 blur-3xl" />
-                <LoaderCircle className="size-10 animate-spin text-emerald-400" />
-                <p className="text-base text-[var(--text)]">Generating your AI engineering team...</p>
-            </section>
-        );
+        return <LoadingView message={"Generating your AI engineering team..."} />;
     }
 
     if (generate.isSuccess && generate.data) {
@@ -67,20 +61,7 @@ export default function MultiStepForm() {
     }
 
     if (generate.error) {
-        return (
-            <section className="relative flex flex-col items-center justify-center gap-6 px-4 py-24 sm:py-32">
-                <div className="pointer-events-none absolute inset-0 bg-[length:32px_32px] opacity-[0.04] [background-image:radial-gradient(circle,var(--accent)_1px,transparent_1px)]" />
-                <div className="pointer-events-none absolute -top-48 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-[var(--accent)]/8 blur-3xl" />
-                <p className="text-base text-red-400">Something went wrong while generating your team.</p>
-                <Button
-                    size="lg"
-                    className="h-10 rounded-xl border-0 bg-emerald-900 px-6 text-sm font-semibold text-white shadow-lg shadow-[var(--accent)]/25 transition-all duration-200 hover:bg-emerald-400/85 hover:shadow-[var(--accent)]/35 hover:scale-[1.02] active:scale-[0.98]"
-                    onClick={() => { if (lastData.current) generate.mutate(lastData.current); }}
-                >
-                    Try again
-                </Button>
-            </section>
-        );
+        return <ErrorView message={"Generation failed. Please try again."} onRetry={() => { if (lastData.current) generate.mutate(lastData.current); }} />;
     }
 
     const steps = [
