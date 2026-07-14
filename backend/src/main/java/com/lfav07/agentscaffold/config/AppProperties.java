@@ -6,8 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record AppProperties(
     Paths paths,
     Generation generation,
-    Stacks stacks
+    Stacks stacks,
+    Cors cors
 ) {
+    public record Cors(String allowedOrigins) {}
     public record Paths(String definitions, String templates) {}
 
     public record Generation(
