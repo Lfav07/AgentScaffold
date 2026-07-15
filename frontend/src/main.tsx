@@ -6,6 +6,7 @@ import GenerationPage from "@/features/generation/pages/GenerationPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import './App.css'
 import AgentsPage from "@/features/agents/pages/AgentsPage.tsx";
+import PresetsPage from "@/features/presets/pages/PresetsPage.tsx";
 const queryClient = new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path={'/'} element={<HomePage></HomePage>} />
               <Route path={'/generate'} element={<GenerationPage />}/>
               <Route path={'/agents'} element={<AgentsPage />}/>
+              <Route path={'/presets'} element={<PresetsPage />} />
           </Routes>
       </BrowserRouter>
       </QueryClientProvider>

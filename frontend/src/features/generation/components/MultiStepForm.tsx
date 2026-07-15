@@ -7,13 +7,14 @@ import ProjectNameStep from "@/features/generation/components/steps/ProjectNameS
 import {useGeneration} from "@/features/generation/hooks/generationHooks.ts";
 import {Button} from "@/components/ui/button";
 import PresetStep from "@/features/generation/components/steps/PresetStep.tsx";
-import {usePresets} from "@/features/presets/components/presetsHooks.ts";
+
 import {useStacks} from "@/features/stacks/hooks/stacksHooks.ts";
 import StackStep from "@/features/generation/components/steps/StackStep.tsx";
 import PreviewStep from "@/features/generation/components/steps/PreviewStep.tsx";
 import SuccessView from "@/features/generation/components/SuccessView.tsx";
 import LoadingView from "@/features/generation/components/LoadingView.tsx";
 import ErrorView from "@/features/generation/components/ErrorView.tsx";
+import {usePresets} from "@/features/presets/hooks/presetsHooks.ts";
 
 export default function MultiStepForm() {
     const [currentStep, setCurrentStep] = useState(0);
