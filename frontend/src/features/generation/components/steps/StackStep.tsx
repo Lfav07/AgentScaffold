@@ -1,7 +1,8 @@
 import {useEffect} from "react";
 import {useFormContext} from "react-hook-form";
 import * as z from "zod";
-import type {GenerationRequestType, BackendStackEnum, FrontendStackEnum} from "@/features/generation/schemas.ts";
+import type {GenerationRequestType} from "@/features/generation/schemas.ts";
+import {BackendStackEnum, FrontendStackEnum} from "@/features/generation/schemas.ts";
 import type {Stack} from "@/shared/types.ts";
 import {presetStackRequirements} from "@/features/generation/presetStacks.ts";
 import {
@@ -16,7 +17,7 @@ type StackStepProps = {
     backendStacks: Stack[];
     frontendStacks: Stack[];
 };
-export default function StackStep({backendStacks, frontendStacks}: StackStepProps){
+export default function StackStep({backendStacks, frontendStacks}: StackStepProps) {
     const {setValue, watch, formState: {errors}} = useFormContext<GenerationRequestType>()
     const selectedPreset = watch("preset")
     const selectedBackend = watch("backendStack")
@@ -53,9 +54,12 @@ export default function StackStep({backendStacks, frontendStacks}: StackStepProp
                         </span>
                         <Select
                             value={selectedBackend ?? ""}
-                            onValueChange={(val) => { if (val) setValue("backendStack", val as z.infer<typeof BackendStackEnum>); }}
+                            onValueChange={(val) => {
+                                if (val) setValue("backendStack", val as z.infer<typeof BackendStackEnum>);
+                            }}
                         >
-                            <SelectTrigger className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
+                            <SelectTrigger
+                                className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
                                 <SelectValue placeholder="Select a backend...">
                                     {backendName}
                                 </SelectValue>
@@ -80,9 +84,12 @@ export default function StackStep({backendStacks, frontendStacks}: StackStepProp
                         </span>
                         <Select
                             value={selectedFrontend ?? ""}
-                            onValueChange={(val) => { if (val) setValue("frontendStack", val as z.infer<typeof FrontendStackEnum>); }}
+                            onValueChange={(val) => {
+                                if (val) setValue("frontendStack", val as z.infer<typeof FrontendStackEnum>);
+                            }}
                         >
-                            <SelectTrigger className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
+                            <SelectTrigger
+                                className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
                                 <SelectValue placeholder="Select a frontend...">
                                     {frontendName}
                                 </SelectValue>
