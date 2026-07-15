@@ -54,9 +54,7 @@ function AgentSection({category, agents}: {category: AgentCategory; agents: Agen
 export default function AgentsPage() {
     const agentsList = useAgents();
 
-    // ✅ CORREÇÃO: O hook useMemo agora fica no topo e roda em TODAS as renderizações
     const grouped = useMemo(() => {
-        // Usamos encadeamento opcional (?.) para evitar erros caso data ainda seja undefined
         if (!agentsList.data) return { backend: [], frontend: [], general: [] };
 
         const sorted = [...agentsList.data].sort((a, b) => a.name.localeCompare(b.name));
@@ -67,29 +65,31 @@ export default function AgentsPage() {
         return groups;
     }, [agentsList.data]);
 
-    // 💡 Os retornos antecipados ficam obrigatoriamente DEPOIS de todos os hooks
-    if (agentsList.isPending) return <LoadingView message={"Loading agents..."} />;
-    if (agentsList.isError) return <ErrorView message={"Could not load agents. Please try again."} />;
-
     return (
         <div className="bg-gradient-to-r from-white to-[#abbaab]">
             <Header/>
             <main className="min-h-screen">
-                <section className="relative flex flex-col items-center px-4 py-20 sm:py-28">
-                    <div className="pointer-events-none absolute inset-0 bg-[length:32px_32px] opacity-[0.04] [background-image:radial-gradient(circle,var(--accent)_1px,transparent_1px)]" />
-                    <div className="pointer-events-none absolute -top-48 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-[var(--accent)]/8 blur-3xl" />
-                    <h1 className="text-4xl font-bold tracking-tight text-[var(--text-h)] sm:text-5xl">
-                        Agents
-                    </h1>
-                    <p className="mt-3 max-w-lg text-balance text-center text-base leading-relaxed text-[var(--text)]">
-                      All available agents direct from our catalog.
-                    </p>
-                    <div className="mt-12 flex w-full flex-col items-center gap-14">
-                        <AgentSection category="backend" agents={grouped.backend} />
-                        <AgentSection category="frontend" agents={grouped.frontend} />
-                        <AgentSection category="general" agents={grouped.general} />
-                    </div>
-                </section>
+                {agentsList.isPending ? (
+                    <LoadingView message={"Loading agents..."} />
+                ) : agentsList.isError ? (
+                    <ErrorView message={"Could not load agents. Please try again."} />
+                ) : (
+                    <section className="relative flex flex-col items-center px-4 py-20 sm:py-28">
+                        <div className="pointer-events-none absolute inset-0 bg-[length:32px_32px] opacity-[0.04] [background-image:radial-gradient(circle,var(--accent)_1px,transparent_1px)]" />
+                        <div className="pointer-events-none absolute -top-48 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-[var(--accent)]/8 blur-3xl" />
+                        <h1 className="text-4xl font-bold tracking-tight text-[var(--text-h)] sm:text-5xl">
+                            Agents
+                        </h1>
+                        <p className="mt-3 max-w-lg text-balance text-center text-base leading-relaxed text-[var(--text)]">
+                          All available agents direct from our catalog.
+                        </p>
+                        <div className="mt-12 flex w-full flex-col items-center gap-14">
+                            <AgentSection category="backend" agents={grouped.backend} />
+                            <AgentSection category="frontend" agents={grouped.frontend} />
+                            <AgentSection category="general" agents={grouped.general} />
+                        </div>
+                    </section>
+                )}
             </main>
         </div>
     );
