@@ -54,6 +54,14 @@ function StackSection({category, stacks}: {category: StackCategory; stacks: Stac
 
 export default function StacksPage() {
     const stacksList = useStacks()
+    const backendStacks = useMemo(
+        () => stacksList.data?.backend ?? [],
+        [stacksList.data]
+    );
+    const frontendStacks = useMemo(
+        () => stacksList.data?.frontend ?? [],
+        [stacksList.data]
+    );
 
     return (
         <div className="bg-gradient-to-r from-white to-[#abbaab]">
@@ -74,8 +82,8 @@ export default function StacksPage() {
                             Technology stacks available for your generated projects.
                         </p>
                         <div className="mt-12 flex w-full flex-col items-center gap-14">
-                            <StackSection category="backend" stacks={stacksList.data.backend} />
-                            <StackSection category="frontend" stacks={stacksList.data.frontend} />
+                            <StackSection category="backend" stacks={backendStacks} />
+                            <StackSection category="frontend" stacks={frontendStacks} />
                         </div>
                     </section>
                 )}
