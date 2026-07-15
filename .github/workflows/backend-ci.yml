@@ -2,11 +2,21 @@ name: Backend CI
 
 on:
   push:
-    branches: [ main, develop, "feature/**" ]
-  pull_request:
-    branches: [ main, develop ]
-  workflow_dispatch:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
 
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
 env:
   JAVA_VERSION: "25"
   MAVEN_OPTS: "-Xmx1024m"
@@ -22,6 +32,10 @@ jobs:
       contents: read
       checks: write
     timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+
     steps:
       # 1. Checkout
       - uses: actions/checkout@v4
@@ -47,7 +61,7 @@ jobs:
         uses: dorny/test-reporter@v3
         with:
           name: Unit & Integration Tests
-          path: "**/TEST-*.xml"
+          path: "backend/**/TEST-*.xml"
           reporter: java-junit
           list-tests: failed
           fail-on-error: true
@@ -59,5 +73,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: target/site/jacoco/
+          path: backend/target/site/jacoco/
           retention-days: 7

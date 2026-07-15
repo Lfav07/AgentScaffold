@@ -44,6 +44,7 @@ not implementation details.
     - Identify dependencies to mock.
     - Identify observable outcomes.
     - Decide the minimal set of test cases.
+
 2. IDENTIFY all behaviors that require verification:
     - happy paths
     - edge cases
@@ -57,7 +58,7 @@ not implementation details.
 7. OUTPUT: produce a summary of the tests implemented (see Output Format)
 
 ## Coverage Targets
-
+-
 Coverage is measured on production code only.
 
 | Layer         | Line                                 | Branch |
