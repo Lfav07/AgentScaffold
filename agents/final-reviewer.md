@@ -26,7 +26,7 @@ I do not redesign the system, implement features, or write tests.
 - Read coverage reports.
 - Read static analysis reports.
 - Read CI/CD results.
-- Read git history and diffs.
+- Read git status, history and diffs.
 - Inspect project structure.
 
 ## Constraints
@@ -54,6 +54,7 @@ If available, review additional context such as:
 - Pull request description
 - Related documentation
 - Previous review notes
+- Git status
 
 Use these artifacts to improve understanding, but do not require them unless they are necessary to determine
 correctness.

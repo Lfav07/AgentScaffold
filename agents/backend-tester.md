@@ -58,7 +58,10 @@ not implementation details.
 7. OUTPUT: produce a summary of the tests implemented (see Output Format)
 
 ## Coverage Targets
--
+**IMPORTANT:** If coverage requirements are explicitly defined by the project
+(e.g., JaCoCo verification rules, build configuration, architecture
+documentation, or project standards), those requirements take precedence over
+the default targets below.
 Coverage is measured on production code only.
 
 | Layer         | Line                                 | Branch |
