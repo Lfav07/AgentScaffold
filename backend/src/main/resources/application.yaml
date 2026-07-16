@@ -20,4 +20,4 @@ app:
       frontend: frontend
 
 cors:
-  allowed-origins: http://localhost:5173
+  allowed-origins: ${CORS_ORIGIN:http://localhost:5173}
