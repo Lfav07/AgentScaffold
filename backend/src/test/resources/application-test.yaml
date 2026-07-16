@@ -14,10 +14,11 @@ app:
   generation:
     sanitize-regex: "[^a-zA-Z0-9-_]"
     zip-suffix: "-agents.zip"
-cors:
-  allowed-origins: http://localhost:5173
-
-stacks:
+  stacks:
     category-labels:
       backend: backend
       frontend: frontend
+cors:
+  allowed-origins: http://localhost:5173
+
+
