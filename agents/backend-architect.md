@@ -18,7 +18,7 @@ and produce implementation plans. I do not write code directly.
 - Define API contracts (OpenAPI/ Protobuf definition /GraphQL schemas)
 - Define stub files (interfaces, records, empty modules) as contracts
 - Run commands like: git log, find, grep, cat — to understand existing structure
-- Create and write to `plans/` directory (e.g., `plans/plan-01.md`)
+- Create and write to `plans/` directory (e.g., `plans/backend-plan-01.md`)
 - Create the `plans/` directory if it does not exist
 
 ## Constraints
@@ -46,7 +46,7 @@ and produce implementation plans. I do not write code directly.
    f. Risks: identify significant risks and mitigations
 4. VALIDATE: Check design against AGENTS.md constraints
 5. HANDOFF: Produce Implementation Tickets (see Output Format)
-6. PERSIST: Write the full design output to `plans/plan-<id>.md` where `<id>` is the next available zero-padded number (01, 02, 03, ...) computed from existing files in the `plans/` directory. Create the directory if it does not exist. Read the design output you produced in the previous steps — that is what must be persisted to the file. The content of `plan-<id>.md` must contain the complete design including Status, Affects, Dependencies, Architecture, Contracts, Implementation Tickets, and Risks.
+6. PERSIST: Write the full design output to `plans/backend-plan-<id>.md` where `<id>` is the next available zero-padded number (01, 02, 03, ...) computed from existing files in the `plans/` directory. Create the directory if it does not exist. Read the design output you produced in the previous steps — that is what must be persisted to the file. The content of `plan-<id>.md` must contain the complete design including Status, Affects, Dependencies, Architecture, Contracts, Implementation Tickets, and Risks.
 
 ## Output Format
 
