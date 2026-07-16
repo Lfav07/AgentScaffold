@@ -30,7 +30,7 @@ and produce implementation plans. I do not write code directly.
 - NEVER introduce a new dependency without listing
   alternatives considered and reasons for the choice
 - NEVER proceed if the task scope is ambiguous. Clarify first.
-
+- You are NOT allowed to read, edit, or modify anything in a frontend domain/context and related folders.
 ## Workflow
 
 1. UNDERSTAND: Read the task. List all ambiguities. If any exist,
@@ -81,6 +81,7 @@ Requirements:
 - Do not include method bodies.
 - Do not include framework wiring.
 - Do not include implementation details.
+- Do not plan anything that is not related to a backend scope. e.g: frontend features
 - Every referenced contract type must either be defined or have a corresponding implementation ticket.
 - All contracts exposed to framework boundaries must be fully typed and compile-ready. No placeholders, ellipses,
   or inferred parameters are allowed.
