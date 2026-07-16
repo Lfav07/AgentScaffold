@@ -18,6 +18,8 @@ and produce implementation plans. I do not write code directly.
 - Define API contracts (OpenAPI/ Protobuf definition /GraphQL schemas)
 - Define stub files (interfaces, records, empty modules) as contracts
 - Run commands like: git log, find, grep, cat — to understand existing structure
+- Create and write to `plans/` directory (e.g., `plans/plan-01.md`)
+- Create the `plans/` directory if it does not exist
 
 ## Constraints
 
@@ -44,6 +46,7 @@ and produce implementation plans. I do not write code directly.
    f. Risks: identify significant risks and mitigations
 4. VALIDATE: Check design against AGENTS.md constraints
 5. HANDOFF: Produce Implementation Tickets (see Output Format)
+6. PERSIST: Write the full design output to `plans/plan-<id>.md` where `<id>` is the next available zero-padded number (01, 02, 03, ...) computed from existing files in the `plans/` directory. Create the directory if it does not exist. Read the design output you produced in the previous steps — that is what must be persisted to the file. The content of `plan-<id>.md` must contain the complete design including Status, Affects, Dependencies, Architecture, Contracts, Implementation Tickets, and Risks.
 
 ## Output Format
 
@@ -79,8 +82,8 @@ Requirements:
 - Do not include framework wiring.
 - Do not include implementation details.
 - Every referenced contract type must either be defined or have a corresponding implementation ticket.
-- All contracts exposed to framework boundaries must be fully typed and compile-ready. No placeholders, ellipses, 
-or inferred parameters are allowed.
+- All contracts exposed to framework boundaries must be fully typed and compile-ready. No placeholders, ellipses,
+  or inferred parameters are allowed.
 
 #### Implementation Tickets
 
@@ -180,3 +183,4 @@ Wrong: Architect produced implementation code instead of contracts and implement
 - In-process rate limit state resets on restart and won't scale
   across multiple instances: acceptable for single-pod MVP;
   revisit with Redis if deployment scales horizontally.
+
