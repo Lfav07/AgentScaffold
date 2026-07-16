@@ -18,3 +18,6 @@ app:
     category-labels:
       backend: backend
       frontend: frontend
+
+cors:
+  allowed-origins: http://localhost:5173
