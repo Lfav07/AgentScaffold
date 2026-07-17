@@ -8,9 +8,11 @@ import './App.css'
 import AgentsPage from "@/features/agents/pages/AgentsPage.tsx";
 import PresetsPage from "@/features/presets/pages/PresetsPage.tsx";
 import StacksPage from "@/features/stacks/pages/StacksPage.tsx";
+import { ThemeProvider } from '@/shared/theme/ThemeContext';
 const queryClient = new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <ThemeProvider>
       <QueryClientProvider client={queryClient}>
       <BrowserRouter>
           <Routes>
@@ -22,5 +24,6 @@ createRoot(document.getElementById('root')!).render(
           </Routes>
       </BrowserRouter>
       </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>
 )

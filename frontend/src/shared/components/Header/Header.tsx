@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import ThemeToggle from "@/shared/theme/ThemeToggle";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -53,6 +54,9 @@ export default function Header() {
               {label}
             </NavLink>
           ))}
+          <div className="ml-2 flex items-center">
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </header>

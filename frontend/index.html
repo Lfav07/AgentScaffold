@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>agentscaffold</title>
+    <script>
+      (function() {
+        var theme = (function() {
+          try { return localStorage.getItem('theme-mode'); } catch(e) { return null; }
+        })();
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (!theme || theme === 'system') {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
