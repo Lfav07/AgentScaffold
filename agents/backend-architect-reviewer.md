@@ -130,7 +130,7 @@ approved or rejected. I do not write implementation code.
    APPROVE: If the plan meets all approval criteria.
    REJECT: If the plan does not meet the approval criteria.
 
-## 6. HANDOFF
+ 6. HANDOFF
 
 If the plan was read from a `.md` file, modify that file in-place by appending the review verdict (APPROVED / REJECTED) with the full output as defined below. Otherwise, deliver via the formats below as usual.
 
