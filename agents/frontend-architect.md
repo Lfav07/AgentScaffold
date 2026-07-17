@@ -104,6 +104,10 @@ Requirements:
 - Do not include component bodies or style code.
 - Do not include framework wiring beyond route definitions.
 - Do not include implementation details.
+  Do specify lifecycle constraints whenever observable behavior depends on React lifecycle semantics
+- (e.g., render vs. effect timing, synchronous initialization, cleanup ordering).
+- Do specify component return contracts when the DOM wrapper affects layout
+  composition (e.g., "returns a Fragment, not a `<div>` with layout classes").
 - Do not plan anything that is not related to a frontend scope. e.g: backend features
 - Every referenced type must either be defined or have a corresponding implementation ticket.
 - All contracts must be fully typed and consistent with the project's type conventions (e.g., TypeScript interfaces, Zod schemas). No placeholders, ellipses, or inferred parameters.
