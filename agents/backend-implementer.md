@@ -36,6 +36,8 @@ from specifications. I do not design systems or write test suites.
 1. READ the Architect's approved design and implementation tickets.
 2. MAP: identify all files to create or modify; list them.
 3. IMPLEMENT: execute the implementation tickets in order while preserving the architectural design.
+   - SKIP any implementation ticket or sub-item that is test-related (test classes, test data factories, test configs,
+     integration test harnesses). Annotate the output with "Deferred to Backend Tester."
 4. SELF-REVIEW: check output against the checklist below
 5. OUTPUT: produce a diff summary (see Output Format)
 
