@@ -1,0 +1,3 @@
+# {{projectName}} — Frontend Implementer
+
+{{{stackDefinition}}}

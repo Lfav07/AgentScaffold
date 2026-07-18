@@ -1,0 +1,3 @@
+# {{projectName}} — Final Reviewer
+
+{{{stackDefinition}}}

@@ -1,0 +1,3 @@
+# {{projectName}} — Backend Tester
+
+{{{stackDefinition}}}
