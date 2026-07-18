@@ -16,7 +16,7 @@ import LoadingView from "@/features/generation/components/LoadingView.tsx";
 import ErrorView from "@/features/generation/components/ErrorView.tsx";
 import {usePresets} from "@/features/presets/hooks/presetsHooks.ts";
 
-export default function MultiStepForm() {
+export function MultiStepForm() {
     const [currentStep, setCurrentStep] = useState(0);
     const [submittedName, setSubmittedName] = useState("");
     const lastData = useRef<GenerationRequestType | null>(null);
@@ -115,11 +115,13 @@ export default function MultiStepForm() {
                                 <Button type="button" size="lg" className={btnClass} onClick={() => form.handleSubmit(onSubmit)()}>
                                 Submit
                                 </Button>
-                            )}
-                        </div>
+                                    )}
+                            </div>
                     </form>
                 </FormProvider>
             </div>
         </section>
     );
 }
+
+export default MultiStepForm;
