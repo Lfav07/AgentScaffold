@@ -4,15 +4,6 @@ import { ApiError } from '@/shared/api/errors';
 
 const BASE = '';
 
-function mockFetch(status: number, body: unknown, ok?: boolean) {
-  return vi.fn().mockResolvedValue({
-    ok: ok ?? (status >= 200 && status < 300),
-    status,
-    json: () => Promise.resolve(body),
-    blob: () => Promise.resolve(new Blob([JSON.stringify(body)])),
-  });
-}
-
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn());
 });
