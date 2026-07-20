@@ -10,7 +10,18 @@ import PresetsPage from "@/features/presets/pages/PresetsPage.tsx";
 import StacksPage from "@/features/stacks/pages/StacksPage.tsx";
 import { ThemeProvider } from '@/shared/theme/ThemeContext';
 import { CommandPaletteProvider } from '@/features/command-palette/CommandPaletteContext';
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: 3,
+            retryDelay: (attemptIndex: number) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        },
+        mutations: {
+            retry: 3,
+            retryDelay: (attemptIndex: number) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        },
+    },
+})
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>

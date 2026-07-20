@@ -3,7 +3,6 @@ import {generate} from "@/features/generation/api/generationApi.ts";
 
 export function useGeneration() {
     return useMutation({
-        mutationFn: generate,
-         retry: 1
+        mutationFn: (vars, { signal }) => generate(vars, { signal }),
     });
 }
