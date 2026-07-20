@@ -8,7 +8,7 @@ import ProductPreview from "@/features/home/components/ProductPreview.tsx";
 
 export default function HomePage() {
     return (
-        <div className={"bg-gradient-to-r from-white to-[#abbaab] dark:from-[#0a0a0f] dark:to-[#1a2e2e]"}>
+        <div className="min-h-screen overflow-x-hidden bg-gradient-to-r from-white to-[#abbaab] dark:from-[#0a0a0f] dark:to-[#1a2e2e]">
             <Header/>
             <main>
                 <Hero/>
