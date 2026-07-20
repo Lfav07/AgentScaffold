@@ -72,7 +72,7 @@ export default function StacksPage() {
                 ) : stacksList.error ? (
                     <ErrorView message={"Could not load stacks. Please try again."} />
                 ) : (
-                    <section className="relative flex flex-col items-center px-4 py-20 sm:py-28">
+                    <section className="relative flex flex-col items-center overflow-hidden px-4 py-20 sm:py-28">
                         <div className="pointer-events-none absolute inset-0 bg-[length:32px_32px] opacity-[0.04] [background-image:radial-gradient(circle,var(--accent)_1px,transparent_1px)]" />
                         <div className="pointer-events-none absolute -top-48 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-[var(--accent)]/8 blur-3xl" />
                         <h1 className="text-4xl font-bold tracking-tight text-[var(--text-h)] sm:text-5xl">
