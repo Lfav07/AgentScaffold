@@ -32,7 +32,7 @@ export default function PresetStep({ presetsList }: PresetStepProps) {
                 </span>
                 <Select 
                     value={selectedPreset ?? ""}
-                    onValueChange={(val) => { if (val) setValue("preset", val); }}
+                    onValueChange={(val) => { if (val) setValue("preset", val as GenerationRequestType["preset"]); }}
                 >
                     <SelectTrigger className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
                         <SelectValue placeholder="Select a preset...">

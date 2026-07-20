@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { api } from '@/shared/api/apiClient';
-import { ApiError } from '@/shared/api/errors';
+import { ApiError, TimeoutError } from '@/shared/api/errors';
 
 const BASE = '';
 
@@ -10,6 +10,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.useRealTimers();
 });
 
 describe('api.get', () => {
@@ -217,5 +218,21 @@ describe('network error', () => {
     fetch.mockRejectedValue(new TypeError('Failed to fetch'));
 
     await expect(api.get('/test')).rejects.toThrow(TypeError);
+  });
+});
+
+describe('timeout', () => {
+  it('throws TimeoutError when fetch never resolves', async () => {
+    vi.useFakeTimers();
+    const fetch = vi.mocked(globalThis.fetch);
+    fetch.mockReturnValue(new Promise(() => {}));
+
+    const getPromise = api.get('/test');
+
+    vi.advanceTimersByTime(30_000);
+
+    await expect(getPromise).rejects.toThrow(TimeoutError);
+
+    vi.useRealTimers();
   });
 });
