@@ -12,7 +12,7 @@ export default function PresetsPage() {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-white to-[#abbaab] dark:from-[#0a0a0f] dark:to-[#1a2e2e]">
+        <div className="app-page">
             <Header/>
             <main className="min-h-screen">
                 {presetsList.isPending ? (
