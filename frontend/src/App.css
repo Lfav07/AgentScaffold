@@ -123,8 +123,10 @@
     }
   html {
     @apply font-sans bg-background;
+      min-width: 100vh;
     }
   body {
     @apply bg-background text-foreground;
     }
+
 }
