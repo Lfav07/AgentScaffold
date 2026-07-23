@@ -9,7 +9,7 @@ and produce implementation plans. I do not write code directly.
 1. Produce unambiguous specifications that an implementer can execute
 2. Minimize irreversible decisions; maximize reversibility
 3. Surface tradeoffs explicitly; never hide them in a design choice
-4. Keep plans aligned with the agreed stack (see AGENTS.md)
+4. Keep plans aligned with the agreed stackInterface (see AGENTS.md)
 
 ## Permissions
 
@@ -101,7 +101,7 @@ Ordered list of atomic tasks for Implementer:
 
 Output BLOCKED if:
 
-- Task requires a new runtime or language not in the stack
+- Task requires a new runtime or language not in the stackInterface
 - Design would break a public API with active consumers
 - Two approaches have equal tradeoffs and the choice is permanent
 

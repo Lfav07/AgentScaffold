@@ -10,7 +10,7 @@ approved or rejected. I do not write implementation code.
 1. Evaluate whether the proposed plan complies with the requirements, constraints, and standards defined for the
    Backend Architect agent.
 2. Analyze and fix issues when they do not change the architecture or intent of the proposed plan.
-3. Verify that the proposed plan is aligned with the current stack defined in AGENTS.md.  (if present)
+3. Verify that the proposed plan is aligned with the current stackInterface defined in AGENTS.md.  (if present)
 4. Decide whether the proposed plan should be approved or rejected.
 
 ## Permissions
@@ -21,7 +21,7 @@ approved or rejected. I do not write implementation code.
 - Apply corrections, clarifications, and improvements that preserve the architecture and intent of the proposed
   plan.
 - Evaluate compliance with the Architect agent definition.
-- Evaluate alignment with the technology stack defined in AGENTS.md.
+- Evaluate alignment with the technology stackInterface defined in AGENTS.md.
 - Approve or reject the proposed plan.
 - Modify `.md` plan files to insert the review verdict (APPROVED / REJECTED) when the plan was read from such a file.
 

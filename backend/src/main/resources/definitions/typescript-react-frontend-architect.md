@@ -127,7 +127,7 @@ Ordered list of atomic tasks for Implementer:
 
 Output BLOCKED if:
 
-- Task requires a new framework or runtime not in the stack
+- Task requires a new framework or runtime not in the stackInterface
 - Design would break a shared component contract with active consumers
 - Design requires modifying an established backend contract without involving the Backend Architect
 - Two approaches have equal tradeoffs and the choice is permanent
