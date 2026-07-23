@@ -6,11 +6,11 @@ import com.lfav07.agentscaffold.exception.InvalidPresetException;
 
 public enum GenerationPreset {
     ENTERPRISE_FULLSTACK,
-    ENTERPRISE_SPRING,
-    ENTERPRISE_REACT,
+    ENTERPRISE_BACKEND,
+    ENTERPRISE_FRONTEND,
     STARTUP_READY,
-    REACT_READY,
-    SPRING_READY;
+    FRONTEND_READY,
+    BACKEND_READY;
 
     /**
      * Resolves a case-insensitive string value to the corresponding generation preset constant.

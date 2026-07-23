@@ -29,7 +29,7 @@ class PresetAgentResolverTest {
 
     @Test
     void resolve_shouldReturnEnterpriseSpringAgents_forEnterpriseSpringPreset() {
-        Set<CoreAgentType> agents = resolver.resolve(GenerationPreset.ENTERPRISE_SPRING);
+        Set<CoreAgentType> agents = resolver.resolve(GenerationPreset.ENTERPRISE_BACKEND);
         assertThat(agents).containsExactlyInAnyOrder(
                 CoreAgentType.BACKEND_ARCHITECT,
                 CoreAgentType.BACKEND_ARCHITECT_REVIEWER,

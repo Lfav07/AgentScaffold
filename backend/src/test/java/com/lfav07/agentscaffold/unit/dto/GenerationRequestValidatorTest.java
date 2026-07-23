@@ -44,14 +44,14 @@ class GenerationRequestValidatorTest {
 
     @Test
     void isValid_shouldPass_whenFrontendOnlyPresetWithBackendStackNull() {
-        when(presetAgentResolver.resolve(GenerationPreset.REACT_READY)).thenReturn(Set.of(
+        when(presetAgentResolver.resolve(GenerationPreset.FRONTEND_READY)).thenReturn(Set.of(
                 CoreAgentType.FRONTEND_ARCHITECT,
                 CoreAgentType.FRONTEND_IMPLEMENTER,
                 CoreAgentType.FRONTEND_TESTER
         ));
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.REACT_READY,
+                GenerationPreset.FRONTEND_READY,
                 "Test",
                 null,
                 FrontendStack.TYPESCRIPT_REACT,
@@ -66,14 +66,14 @@ class GenerationRequestValidatorTest {
 
     @Test
     void isValid_shouldPass_whenBackendOnlyPresetWithFrontendStackNull() {
-        when(presetAgentResolver.resolve(GenerationPreset.ENTERPRISE_SPRING)).thenReturn(Set.of(
+        when(presetAgentResolver.resolve(GenerationPreset.ENTERPRISE_BACKEND)).thenReturn(Set.of(
                 CoreAgentType.BACKEND_ARCHITECT,
                 CoreAgentType.BACKEND_IMPLEMENTER,
                 CoreAgentType.BACKEND_TESTER
         ));
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
+                GenerationPreset.ENTERPRISE_BACKEND,
                 "Test",
                 BackendStack.JAVA_SPRING,
                 null,

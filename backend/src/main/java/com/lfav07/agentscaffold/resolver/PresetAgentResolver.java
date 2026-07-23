@@ -25,14 +25,14 @@ public class PresetAgentResolver {
                             CoreAgentType.FRONTEND_TESTER,
                             CoreAgentType.FINAL_REVIEWER
                     ),
-                    GenerationPreset.ENTERPRISE_SPRING, Set.of(
+                    GenerationPreset.ENTERPRISE_BACKEND, Set.of(
                             CoreAgentType.BACKEND_ARCHITECT,
                             CoreAgentType.BACKEND_ARCHITECT_REVIEWER,
                             CoreAgentType.BACKEND_IMPLEMENTER,
                             CoreAgentType.BACKEND_TESTER,
                             CoreAgentType.FINAL_REVIEWER
                     ),
-                    GenerationPreset.ENTERPRISE_REACT, Set.of(
+                    GenerationPreset.ENTERPRISE_FRONTEND, Set.of(
                             CoreAgentType.FRONTEND_ARCHITECT,
                             CoreAgentType.FRONTEND_ARCHITECT_REVIEWER,
                             CoreAgentType.FRONTEND_IMPLEMENTER,
@@ -47,12 +47,12 @@ public class PresetAgentResolver {
                             CoreAgentType.BACKEND_TESTER,
                             CoreAgentType.FRONTEND_TESTER
                     ),
-                    GenerationPreset.REACT_READY, Set.of(
+                    GenerationPreset.FRONTEND_READY, Set.of(
                             CoreAgentType.FRONTEND_ARCHITECT,
                             CoreAgentType.FRONTEND_IMPLEMENTER,
                             CoreAgentType.FRONTEND_TESTER
                     ),
-                    GenerationPreset.SPRING_READY, Set.of(
+                    GenerationPreset.BACKEND_READY, Set.of(
                             CoreAgentType.BACKEND_ARCHITECT,
                             CoreAgentType.BACKEND_IMPLEMENTER,
                             CoreAgentType.BACKEND_TESTER

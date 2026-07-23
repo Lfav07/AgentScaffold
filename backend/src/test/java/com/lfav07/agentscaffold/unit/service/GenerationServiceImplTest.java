@@ -63,7 +63,7 @@ class GenerationServiceImplTest {
     @BeforeEach
     void setUp() {
         defaultRequest = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
+                GenerationPreset.ENTERPRISE_BACKEND,
                 "Test",
                 BackendStack.JAVA_SPRING,
                 null,
@@ -85,7 +85,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[]{1, 2, 3});
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
+                GenerationPreset.ENTERPRISE_BACKEND,
                 "MyProject",
                 BackendStack.JAVA_SPRING,
                 FrontendStack.TYPESCRIPT_REACT,
@@ -109,7 +109,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
+                GenerationPreset.ENTERPRISE_BACKEND,
                 "My Project!",
                 BackendStack.JAVA_SPRING,
                 FrontendStack.TYPESCRIPT_REACT,
@@ -185,7 +185,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_REACT,
+                GenerationPreset.ENTERPRISE_FRONTEND,
                 "Test",
                 null,
                 FrontendStack.TYPESCRIPT_REACT,
@@ -229,7 +229,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
+                GenerationPreset.ENTERPRISE_BACKEND,
                 "Test",
                 BackendStack.JAVA_SPRING,
                 null,
@@ -256,7 +256,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_REACT,
+                GenerationPreset.ENTERPRISE_FRONTEND,
                 "Test",
                 null,
                 FrontendStack.TYPESCRIPT_REACT,
@@ -281,7 +281,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_REACT,
+                GenerationPreset.ENTERPRISE_FRONTEND,
                 "Test",
                 null,
                 null,

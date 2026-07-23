@@ -3,11 +3,11 @@ import {presetStackRequirements} from "@/features/generation/presetStacks.ts";
 
 export const PresetEnum = z.enum([
     "enterprise-fullstack",
-    "enterprise-spring",
-    "enterprise-react",
+    "enterprise-backend",
+    "enterprise-frontend",
     "startup-ready",
-    "spring-ready",
-    "react-ready"
+    "backend-ready",
+    "frontend-ready"
 ])
 export const BackendStackEnum = z.enum([
     "java-spring"

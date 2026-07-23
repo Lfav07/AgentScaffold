@@ -83,7 +83,7 @@ class EnumTypeResolutionTest {
     @ParameterizedTest
     @CsvSource({
         "enterprise-fullstack, ENTERPRISE_FULLSTACK",
-        "enterprise-spring, ENTERPRISE_SPRING"
+        "enterprise-backend, ENTERPRISE_BACKEND"
     })
     void generationPreset_fromValue_shouldReturnEnum_forValidValue(String input, GenerationPreset expected) {
         assertThat(GenerationPreset.fromValue(input)).isEqualTo(expected);

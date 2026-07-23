@@ -44,7 +44,7 @@ class GenerationApiIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "enterprise-spring",
+                                    "preset": "enterprise-backend",
                                     "projectName": "MyProject",
                                     "backendStack": "java-spring",
                                     "frontendStack": "typescript-react"
@@ -63,7 +63,7 @@ class GenerationApiIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "enterprise-spring",
+                                    "preset": "enterprise-backend",
                                     "projectName": "MyProject",
                                     "backendStack": "java-spring",
                                     "frontendStack": "typescript-react"
@@ -74,7 +74,7 @@ class GenerationApiIT {
 
     @Test
     void scaffold_shouldReturn200_whenReactReadyPresetWithoutBackendStack() throws Exception {
-        when(presetAgentResolver.resolve(GenerationPreset.REACT_READY)).thenReturn(
+        when(presetAgentResolver.resolve(GenerationPreset.FRONTEND_READY)).thenReturn(
                 Set.of(
                         com.lfav07.agentscaffold.model.agent.CoreAgentType.FRONTEND_ARCHITECT,
                         com.lfav07.agentscaffold.model.agent.CoreAgentType.FRONTEND_IMPLEMENTER,
@@ -89,7 +89,7 @@ class GenerationApiIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "react-ready",
+                                    "preset": "frontend-ready",
                                     "projectName": "MyProject",
                                     "frontendStack": "typescript-react"
                                 }
@@ -107,7 +107,7 @@ class GenerationApiIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "enterprise-spring",
+                                    "preset": "enterprise-backend",
                                     "projectName": "MyProject",
                                     "backendStack": "java-spring",
                                     "frontendStack": "typescript-react"
