@@ -12,18 +12,18 @@ describe('generationRequestSchema', () => {
     expect(result.success).toBe(true);
   });
 
-  it('accepts valid backend-only preset (enterprise-spring) without frontendStack', () => {
+  it('accepts valid backend-only preset (enterprise-backend) without frontendStack', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-spring',
+      preset: 'enterprise-backend',
       projectName: 'my-project',
       backendStack: 'java-spring',
     });
     expect(result.success).toBe(true);
   });
 
-  it('accepts valid frontend-only preset (enterprise-react) without backendStack', () => {
+  it('accepts valid frontend-only preset (enterprise-frontend) without backendStack', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-react',
+      preset: 'enterprise-frontend',
       projectName: 'my-project',
       frontendStack: 'typescript-react',
     });
