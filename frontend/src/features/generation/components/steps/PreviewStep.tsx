@@ -11,7 +11,7 @@ type PreviewStepProps = {
 export default function PreviewStep({presetsList, backendStacks, frontendStacks}: PreviewStepProps) {
     const {watch} = useFormContext<GenerationRequestType>()
     const projectName = watch("projectName")
-    const selectedPreset = watch("preset")
+    const selectedPreset = watch("presetKey")
     const selectedBackend = watch("backendStack")
     const selectedFrontend = watch("frontendStack")
 

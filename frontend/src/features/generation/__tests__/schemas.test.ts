@@ -4,7 +4,7 @@ import { generationRequestSchema } from '@/features/generation/schemas';
 describe('generationRequestSchema', () => {
   it('accepts valid full-stack preset (enterprise-fullstack) with both stacks', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-fullstack',
+      presetKey: 'enterprise-fullstack',
       projectName: 'my-project',
       backendStack: 'java-spring',
       frontendStack: 'typescript-react',
@@ -14,7 +14,7 @@ describe('generationRequestSchema', () => {
 
   it('accepts valid backend-only preset (enterprise-spring) without frontendStack', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-spring',
+      presetKey: 'enterprise-spring',
       projectName: 'my-project',
       backendStack: 'java-spring',
     });
@@ -23,7 +23,7 @@ describe('generationRequestSchema', () => {
 
   it('accepts valid frontend-only preset (enterprise-react) without backendStack', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-react',
+      presetKey: 'enterprise-react',
       projectName: 'my-project',
       frontendStack: 'typescript-react',
     });
@@ -32,7 +32,7 @@ describe('generationRequestSchema', () => {
 
   it('rejects enterprise-fullstack without backendStack', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-fullstack',
+      presetKey: 'enterprise-fullstack',
       projectName: 'my-project',
       frontendStack: 'typescript-react',
     });
@@ -44,7 +44,7 @@ describe('generationRequestSchema', () => {
 
   it('rejects enterprise-fullstack without frontendStack', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-fullstack',
+      presetKey: 'enterprise-fullstack',
       projectName: 'my-project',
       backendStack: 'java-spring',
     });
@@ -56,7 +56,7 @@ describe('generationRequestSchema', () => {
 
   it('rejects empty projectName', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'startup-ready',
+      presetKey: 'startup-ready',
       projectName: '',
       backendStack: 'java-spring',
       frontendStack: 'typescript-react',
@@ -66,7 +66,7 @@ describe('generationRequestSchema', () => {
 
   it('trims whitespace from projectName', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'startup-ready',
+      presetKey: 'startup-ready',
       projectName: '  my-project  ',
       backendStack: 'java-spring',
       frontendStack: 'typescript-react',
@@ -79,7 +79,7 @@ describe('generationRequestSchema', () => {
 
   it('rejects invalid preset enum value', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'invalid-preset',
+      presetKey: 'invalid-preset',
       projectName: 'my-project',
     });
     expect(result.success).toBe(false);
@@ -87,7 +87,7 @@ describe('generationRequestSchema', () => {
 
   it('rejects invalid backendStack enum value', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-fullstack',
+      presetKey: 'enterprise-fullstack',
       projectName: 'my-project',
       backendStack: 'invalid-backend',
       frontendStack: 'typescript-react',
@@ -97,7 +97,7 @@ describe('generationRequestSchema', () => {
 
   it('rejects invalid frontendStack enum value', () => {
     const result = generationRequestSchema.safeParse({
-      preset: 'enterprise-fullstack',
+      presetKey: 'enterprise-fullstack',
       projectName: 'my-project',
       backendStack: 'java-spring',
       frontendStack: 'invalid-frontend',

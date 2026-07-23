@@ -19,7 +19,7 @@ export const FrontendStackEnum = z.enum([
 
 export const generationRequestSchema = z.object(
     {
-        preset: PresetEnum,
+        presetKey: PresetEnum,
         projectName: z.string()
             .trim()
             .min(1, "Project name is required"),
@@ -27,7 +27,7 @@ export const generationRequestSchema = z.object(
         frontendStack: z.optional(FrontendStackEnum)
     }
 ).superRefine((data, ctx) => {
-    const reqs = presetStackRequirements[data.preset];
+    const reqs = presetStackRequirements[data.presetKey];
     if (reqs?.backend && !data.backendStack) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["backendStack"], message: "Backend stack is required for this preset" });
     }
@@ -37,7 +37,7 @@ export const generationRequestSchema = z.object(
 });
 export const stepFields: Record<number, (keyof GenerationRequestType)[]> = {
     0: ["projectName"],
-    1: ["preset"],
+    1: ["presetKey"],
     2: ["backendStack", "frontendStack"],
     3: [],
 } as const;

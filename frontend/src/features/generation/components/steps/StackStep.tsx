@@ -19,7 +19,7 @@ type StackStepProps = {
 };
 export default function StackStep({backendStacks, frontendStacks}: StackStepProps) {
     const {setValue, watch, formState: {errors}} = useFormContext<GenerationRequestType>()
-    const selectedPreset = watch("preset")
+    const selectedPreset = watch("presetKey")
     const selectedBackend = watch("backendStack")
     const selectedFrontend = watch("frontendStack")
     const sortedBackend = [...backendStacks].sort((a, b) => a.name.localeCompare(b.name))

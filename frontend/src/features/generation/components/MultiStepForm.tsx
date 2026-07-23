@@ -25,7 +25,7 @@ export function MultiStepForm() {
         resolver: zodResolver(generationRequestSchema),
         defaultValues: {
             projectName: "",
-            preset: undefined,
+            presetKey: undefined,
             backendStack: undefined,
             frontendStack: undefined,
         }

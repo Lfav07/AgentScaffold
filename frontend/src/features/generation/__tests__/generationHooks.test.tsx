@@ -28,10 +28,10 @@ describe('useGeneration', () => {
     mockGenerate.mockResolvedValueOnce(new Blob());
     const { result } = renderHook(() => useGeneration(), { wrapper: createWrapper() });
 
-    result.current.mutate({ preset: 'startup-ready', projectName: 'test' });
+    result.current.mutate({ presetKey: 'startup-ready', projectName: 'test' });
 
     await waitFor(() => {
-      expect(mockGenerate).toHaveBeenCalledWith({ preset: 'startup-ready', projectName: 'test' });
+      expect(mockGenerate).toHaveBeenCalledWith({ presetKey: 'startup-ready', projectName: 'test' });
     });
   });
 
@@ -39,7 +39,7 @@ describe('useGeneration', () => {
     mockGenerate.mockImplementation(() => new Promise(() => {}));
     const { result } = renderHook(() => useGeneration(), { wrapper: createWrapper() });
 
-    result.current.mutate({ preset: 'startup-ready', projectName: 'test' });
+    result.current.mutate({ presetKey: 'startup-ready', projectName: 'test' });
 
     await waitFor(() => {
       expect(result.current.isPending).toBe(true);
@@ -51,7 +51,7 @@ describe('useGeneration', () => {
     mockGenerate.mockResolvedValueOnce(blob);
     const { result } = renderHook(() => useGeneration(), { wrapper: createWrapper() });
 
-    result.current.mutate({ preset: 'startup-ready', projectName: 'test' });
+    result.current.mutate({ presetKey: 'startup-ready', projectName: 'test' });
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true);
@@ -63,7 +63,7 @@ describe('useGeneration', () => {
     mockGenerate.mockRejectedValue(new Error('Generation failed'));
     const { result } = renderHook(() => useGeneration(), { wrapper: createWrapper() });
 
-    result.current.mutate({ preset: 'startup-ready', projectName: 'test' });
+    result.current.mutate({ presetKey: 'startup-ready', projectName: 'test' });
 
     await waitFor(() => {
       expect(result.current.isError).toBe(true);
@@ -75,7 +75,7 @@ describe('useGeneration', () => {
     mockGenerate.mockResolvedValueOnce(new Blob());
     const { result } = renderHook(() => useGeneration(), { wrapper: createWrapper() });
 
-    result.current.mutate({ preset: 'startup-ready', projectName: 'test' });
+    result.current.mutate({ presetKey: 'startup-ready', projectName: 'test' });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 

@@ -14,7 +14,7 @@ type PresetStepProps = {
 };
 export default function PresetStep({ presetsList }: PresetStepProps) {
     const {setValue, watch} = useFormContext<GenerationRequestType>()
-    const selectedPreset = watch("preset")
+    const selectedPreset = watch("presetKey")
     const sortedPresets = [...presetsList].sort((a, b) => a.name.localeCompare(b.name))
     const presetName = sortedPresets.find(p => p.id === selectedPreset)?.name
     return (
@@ -32,7 +32,7 @@ export default function PresetStep({ presetsList }: PresetStepProps) {
                 </span>
                 <Select 
                     value={selectedPreset ?? ""}
-                    onValueChange={(val) => { if (val) setValue("preset", val as GenerationRequestType["preset"]); }}
+                    onValueChange={(val) => {                     if (val) setValue("presetKey", val as GenerationRequestType["presetKey"]); }}
                 >
                     <SelectTrigger className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)]/50 px-3 py-3 text-sm text-[var(--text)] shadow-none transition-all duration-200 focus-visible:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500/20 data-placeholder:text-[var(--text)]/40">
                         <SelectValue placeholder="Select a preset...">
