@@ -4,8 +4,7 @@ import com.lfav07.agentscaffold.config.AppProperties;
 import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.exception.TemplateNotFoundException;
-import com.lfav07.agentscaffold.model.agent.CoreAgentType;
-import com.lfav07.agentscaffold.model.stack.BackendStack;
+import com.lfav07.agentscaffold.fixture.TestEntities;
 import com.lfav07.agentscaffold.util.TemplateEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class TemplateEngineTest {
                 new AppProperties.Stacks(new AppProperties.Stacks.CategoryLabels("backend", "frontend"))
         );
         engine = new TemplateEngine(appProperties);
-        unit = new AgentExecutionUnit(CoreAgentType.BACKEND_ARCHITECT, BackendStack.JAVA_SPRING);
+        unit = new AgentExecutionUnit(TestEntities.backendArchitect(), "java-spring");
         context = new AgentRenderContext("MyProject", "Java Spring Boot");
     }
 

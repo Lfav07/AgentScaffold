@@ -5,11 +5,9 @@ import com.lfav07.agentscaffold.dto.AgentExecutionUnit;
 import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.dto.GenerationRequest;
 import com.lfav07.agentscaffold.dto.GenerationResult;
-import com.lfav07.agentscaffold.model.agent.CoreAgentType;
-import com.lfav07.agentscaffold.model.preset.GenerationPreset;
-import com.lfav07.agentscaffold.model.stack.BackendStack;
-import com.lfav07.agentscaffold.model.stack.FrontendStack;
-import com.lfav07.agentscaffold.model.stack.GeneralStack;
+import com.lfav07.agentscaffold.exception.InvalidStackException;
+import com.lfav07.agentscaffold.fixture.TestEntities;
+import com.lfav07.agentscaffold.model.agent.Agent;
 import com.lfav07.agentscaffold.resolver.ContextResolver;
 import com.lfav07.agentscaffold.resolver.PresetAgentResolver;
 import com.lfav07.agentscaffold.service.impl.GenerationServiceImpl;
@@ -23,11 +21,10 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Map;
 import java.util.Set;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -55,29 +52,17 @@ class GenerationServiceImplTest {
     @Captor
     private ArgumentCaptor<Map<String, String>> fileMapCaptor;
 
-    @Captor
-    private ArgumentCaptor<AgentExecutionUnit> executionUnitCaptor;
-
-    private GenerationRequest defaultRequest;
-
     @BeforeEach
     void setUp() {
-        defaultRequest = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
-                "Test",
-                BackendStack.JAVA_SPRING,
-                null,
-                null,
-                null
-        );
-        when(appProperties.generation()).thenReturn(
+        lenient().when(appProperties.generation()).thenReturn(
                 new AppProperties.Generation("[^a-zA-Z0-9-_]", "-agents.zip")
         );
     }
 
     @Test
-    void generate_shouldReturnGenerationResultWithZipAndFilename() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(CoreAgentType.BACKEND_ARCHITECT));
+    void generate_shouldReturnZipResult_forValidRequest() {
+        Agent agent = TestEntities.backendArchitect();
+        when(presetAgentResolver.resolve("enterprise-fullstack")).thenReturn(Set.of(agent));
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("MyProject", "definition")
         );
@@ -85,12 +70,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[]{1, 2, 3});
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
-                "MyProject",
-                BackendStack.JAVA_SPRING,
-                FrontendStack.TYPESCRIPT_REACT,
-                null,
-                null
+                "enterprise-fullstack", "MyProject", "java-spring", "typescript-react", null, null
         );
 
         GenerationResult result = generationService.generate(request);
@@ -101,7 +81,8 @@ class GenerationServiceImplTest {
 
     @Test
     void generate_shouldSanitizeProjectNameInFilename() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(CoreAgentType.BACKEND_ARCHITECT));
+        Agent agent = TestEntities.backendArchitect();
+        when(presetAgentResolver.resolve("enterprise-fullstack")).thenReturn(Set.of(agent));
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("My Project!", "definition")
         );
@@ -109,12 +90,7 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
-                "My Project!",
-                BackendStack.JAVA_SPRING,
-                FrontendStack.TYPESCRIPT_REACT,
-                null,
-                null
+                "enterprise-fullstack", "My Project!", "java-spring", "typescript-react", null, null
         );
 
         GenerationResult result = generationService.generate(request);
@@ -126,58 +102,53 @@ class GenerationServiceImplTest {
 
     @Test
     void generate_shouldIterateOverAllPresetAgents() {
-        Set<CoreAgentType> agents = Set.of(
-                CoreAgentType.BACKEND_ARCHITECT,
-                CoreAgentType.BACKEND_IMPLEMENTER,
-                CoreAgentType.BACKEND_TESTER
+        Set<Agent> agents = Set.of(
+                TestEntities.backendArchitect(),
+                TestEntities.backendImplementer(),
+                TestEntities.backendTester()
         );
-        when(presetAgentResolver.resolve(any())).thenReturn(agents);
+        when(presetAgentResolver.resolve("enterprise-spring")).thenReturn(agents);
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("Test", "definition")
         );
         when(templateEngine.buildAgent(any(), any())).thenReturn("content");
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
-        generationService.generate(defaultRequest);
+        GenerationRequest request = new GenerationRequest(
+                "enterprise-spring", "Test", "java-spring", null, null, null
+        );
+
+        generationService.generate(request);
 
         verify(templateEngine, times(3)).buildAgent(any(), any());
     }
 
     @Test
-    void generate_shouldPassFileMapToZipGenerator() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(CoreAgentType.BACKEND_ARCHITECT));
-        when(contextResolver.resolve(any(), any())).thenReturn(
-                new AgentRenderContext("Test", "definition")
-        );
-        when(templateEngine.buildAgent(any(), any())).thenReturn("rendered content");
-        when(zipGenerator.generate(any())).thenReturn(new byte[]{1, 2, 3});
-
-        generationService.generate(defaultRequest);
-
-        verify(zipGenerator).generate(fileMapCaptor.capture());
-        assertThat(fileMapCaptor.getValue()).containsKey("agents/backend-architect.md");
-        assertThat(fileMapCaptor.getValue()).containsValue("rendered content");
-    }
-
-    @Test
     void generate_shouldResolveBackendStack_forBackendAgent() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(CoreAgentType.BACKEND_ARCHITECT));
+        Agent agent = TestEntities.backendArchitect();
+        when(presetAgentResolver.resolve("enterprise-fullstack")).thenReturn(Set.of(agent));
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("Test", "definition")
         );
         when(templateEngine.buildAgent(any(), any())).thenReturn("content");
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
-        generationService.generate(defaultRequest);
+        GenerationRequest request = new GenerationRequest(
+                "enterprise-fullstack", "Test", "java-spring", "typescript-react", null, null
+        );
 
-        verify(contextResolver).resolve(executionUnitCaptor.capture(), any());
-        assertThat(executionUnitCaptor.getValue().type()).isEqualTo(CoreAgentType.BACKEND_ARCHITECT);
-        assertThat(executionUnitCaptor.getValue().stack()).isEqualTo(BackendStack.JAVA_SPRING);
+        generationService.generate(request);
+
+        ArgumentCaptor<AgentExecutionUnit> unitCaptor = ArgumentCaptor.forClass(AgentExecutionUnit.class);
+        verify(contextResolver).resolve(unitCaptor.capture(), any());
+        assertThat(unitCaptor.getValue().agent().getSlug()).isEqualTo("backend-architect");
+        assertThat(unitCaptor.getValue().stackKey()).isEqualTo("java-spring");
     }
 
     @Test
     void generate_shouldResolveFrontendStack_forFrontendAgent() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(CoreAgentType.FRONTEND_ARCHITECT));
+        Agent agent = TestEntities.frontendArchitect();
+        when(presetAgentResolver.resolve("enterprise-react")).thenReturn(Set.of(agent));
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("Test", "definition")
         );
@@ -185,43 +156,21 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_REACT,
-                "Test",
-                null,
-                FrontendStack.TYPESCRIPT_REACT,
-                null,
-                null
+                "enterprise-react", "Test", null, "typescript-react", null, null
         );
+
         generationService.generate(request);
 
-        verify(contextResolver).resolve(executionUnitCaptor.capture(), any());
-        assertThat(executionUnitCaptor.getValue().type()).isEqualTo(CoreAgentType.FRONTEND_ARCHITECT);
-        assertThat(executionUnitCaptor.getValue().stack()).isEqualTo(FrontendStack.TYPESCRIPT_REACT);
+        ArgumentCaptor<AgentExecutionUnit> unitCaptor = ArgumentCaptor.forClass(AgentExecutionUnit.class);
+        verify(contextResolver).resolve(unitCaptor.capture(), any());
+        assertThat(unitCaptor.getValue().agent().getSlug()).isEqualTo("frontend-architect");
+        assertThat(unitCaptor.getValue().stackKey()).isEqualTo("typescript-react");
     }
 
     @Test
     void generate_shouldResolveGeneralStack_forGeneralAgent() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(CoreAgentType.FINAL_REVIEWER));
-        when(contextResolver.resolve(any(), any())).thenReturn(
-                new AgentRenderContext("Test", "definition")
-        );
-        when(templateEngine.buildAgent(any(), any())).thenReturn("content");
-        when(zipGenerator.generate(any())).thenReturn(new byte[0]);
-
-        generationService.generate(defaultRequest);
-
-        verify(contextResolver).resolve(executionUnitCaptor.capture(), any());
-        assertThat(executionUnitCaptor.getValue().type()).isEqualTo(CoreAgentType.FINAL_REVIEWER);
-        assertThat(executionUnitCaptor.getValue().stack()).isEqualTo(GeneralStack.GENERAL);
-    }
-
-    @Test
-    void generate_shouldNotRequireFrontendStack_forBackendOnlyPreset() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(
-                CoreAgentType.BACKEND_ARCHITECT,
-                CoreAgentType.BACKEND_IMPLEMENTER,
-                CoreAgentType.BACKEND_TESTER
-        ));
+        Agent agent = TestEntities.finalReviewer();
+        when(presetAgentResolver.resolve("enterprise-fullstack")).thenReturn(Set.of(agent));
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("Test", "definition")
         );
@@ -229,26 +178,52 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_SPRING,
-                "Test",
-                BackendStack.JAVA_SPRING,
-                null,
-                null,
-                null
+                "enterprise-fullstack", "Test", "java-spring", "typescript-react", null, null
         );
 
-        GenerationResult result = generationService.generate(request);
+        generationService.generate(request);
 
-        assertThat(result.zip()).isNotNull();
+        ArgumentCaptor<AgentExecutionUnit> unitCaptor = ArgumentCaptor.forClass(AgentExecutionUnit.class);
+        verify(contextResolver).resolve(unitCaptor.capture(), any());
+        assertThat(unitCaptor.getValue().agent().getSlug()).isEqualTo("final-reviewer");
+        assertThat(unitCaptor.getValue().stackKey()).isEqualTo("general");
     }
 
     @Test
-    void generate_shouldNotRequireBackendStack_forFrontendOnlyPreset() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(
-                CoreAgentType.FRONTEND_ARCHITECT,
-                CoreAgentType.FRONTEND_IMPLEMENTER,
-                CoreAgentType.FRONTEND_TESTER
-        ));
+    void generate_shouldThrow_whenBackendAgentMissingBackendStack() {
+        Agent agent = TestEntities.backendArchitect();
+        when(presetAgentResolver.resolve("enterprise-react")).thenReturn(Set.of(agent));
+
+        GenerationRequest request = new GenerationRequest(
+                "enterprise-react", "Test", null, "typescript-react", null, null
+        );
+
+        assertThatThrownBy(() -> generationService.generate(request))
+                .isInstanceOf(InvalidStackException.class)
+                .hasMessageContaining("Backend stack not provided");
+    }
+
+    @Test
+    void generate_shouldThrow_whenFrontendAgentMissingFrontendStack() {
+        Agent agent = TestEntities.frontendArchitect();
+        when(presetAgentResolver.resolve("enterprise-spring")).thenReturn(Set.of(agent));
+
+        GenerationRequest request = new GenerationRequest(
+                "enterprise-spring", "Test", "java-spring", null, null, null
+        );
+
+        assertThatThrownBy(() -> generationService.generate(request))
+                .isInstanceOf(InvalidStackException.class)
+                .hasMessageContaining("Frontend stack not provided");
+    }
+
+    @Test
+    void generate_shouldHandleAdditionalCustomAgents() {
+        Set<Agent> agents = Set.of(
+                TestEntities.backendArchitect(),
+                TestEntities.frontendArchitect()
+        );
+        when(presetAgentResolver.resolve("enterprise-fullstack")).thenReturn(agents);
         when(contextResolver.resolve(any(), any())).thenReturn(
                 new AgentRenderContext("Test", "definition")
         );
@@ -256,41 +231,14 @@ class GenerationServiceImplTest {
         when(zipGenerator.generate(any())).thenReturn(new byte[0]);
 
         GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_REACT,
-                "Test",
-                null,
-                FrontendStack.TYPESCRIPT_REACT,
-                null,
-                null
+                "enterprise-fullstack", "Test", "java-spring", "typescript-react",
+                Set.of("custom-agent"), null
         );
 
         GenerationResult result = generationService.generate(request);
 
         assertThat(result.zip()).isNotNull();
-    }
-
-    @Test
-    void generate_shouldHandleGeneralOnlyPreset_withBothStacksNull() {
-        when(presetAgentResolver.resolve(any())).thenReturn(Set.of(
-                CoreAgentType.FINAL_REVIEWER
-        ));
-        when(contextResolver.resolve(any(), any())).thenReturn(
-                new AgentRenderContext("Test", "definition")
-        );
-        when(templateEngine.buildAgent(any(), any())).thenReturn("content");
-        when(zipGenerator.generate(any())).thenReturn(new byte[0]);
-
-        GenerationRequest request = new GenerationRequest(
-                GenerationPreset.ENTERPRISE_REACT,
-                "Test",
-                null,
-                null,
-                null,
-                null
-        );
-
-        GenerationResult result = generationService.generate(request);
-
-        assertThat(result.zip()).isNotNull();
+        verify(zipGenerator).generate(fileMapCaptor.capture());
+        assertThat(fileMapCaptor.getValue()).hasSize(2);
     }
 }

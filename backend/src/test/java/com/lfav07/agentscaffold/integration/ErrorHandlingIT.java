@@ -34,10 +34,9 @@ class ErrorHandlingIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "enterprise-spring",
+                                    "presetKey": "enterprise-spring",
                                     "projectName": "",
-                                    "backendStack": "java-spring",
-                                    "frontendStack": "typescript-react"
+                                    "backendStack": "java-spring"
                                 }
                                 """))
                 .andExpect(status().isBadRequest())
@@ -45,15 +44,14 @@ class ErrorHandlingIT {
     }
 
     @Test
-    void scaffold_shouldReturn400_whenInvalidEnumValue() throws Exception {
+    void scaffold_shouldReturn400_whenInvalidPreset() throws Exception {
         mockMvc.perform(post("/api/v1/scaffold")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "nonexistent-preset",
+                                    "presetKey": "nonexistent-preset",
                                     "projectName": "MyProject",
-                                    "backendStack": "java-spring",
-                                    "frontendStack": "typescript-react"
+                                    "backendStack": "java-spring"
                                 }
                                 """))
                 .andExpect(status().isBadRequest())
@@ -66,7 +64,7 @@ class ErrorHandlingIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "enterprise-fullstack",
+                                    "presetKey": "enterprise-fullstack",
                                     "projectName": "MyProject",
                                     "frontendStack": "typescript-react"
                                 }
@@ -81,7 +79,7 @@ class ErrorHandlingIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "preset": "enterprise-fullstack",
+                                    "presetKey": "enterprise-fullstack",
                                     "projectName": "MyProject",
                                     "backendStack": "java-spring"
                                 }
