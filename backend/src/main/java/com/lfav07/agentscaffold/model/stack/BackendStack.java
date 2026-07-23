@@ -7,7 +7,8 @@ import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 public enum BackendStack implements  Stack {
     JAVA_SPRING("java-spring"),
-    TYPESCRIPT_NODE("typescript-node");
+    TYPESCRIPT_NODE("typescript-node"),
+    PYTHON_FASTAPI("python-fastapi");
 
     @JsonValue
     private final String id;

@@ -11,11 +11,13 @@ export const PresetEnum = z.enum([
 ])
 export const BackendStackEnum = z.enum([
     "java-spring",
-    "typescript-node"
+    "typescript-node",
+    "python-fastapi"
 ])
 export const FrontendStackEnum = z.enum([
     "typescript-react",
-    "javascript-react"
+    "javascript-react",
+    "typescript-angular"
 ])
 
 

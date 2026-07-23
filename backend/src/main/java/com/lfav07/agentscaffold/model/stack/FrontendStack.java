@@ -6,7 +6,8 @@ import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 public enum FrontendStack implements  Stack {
     TYPESCRIPT_REACT("typescript-react"),
-    JAVASCRIPT_REACT("javascript-react");
+    JAVASCRIPT_REACT("javascript-react"),
+    TYPESCRIPT_ANGULAR("typescript-angular");
     @JsonValue
     private final String id;
 
