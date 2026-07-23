@@ -14,7 +14,9 @@ public class StackRegistry {
             BackendStack.JAVA_SPRING,
             new StackItem("java-spring", "Java + Spring Boot"),
             BackendStack.TYPESCRIPT_NODE,
-            new StackItem("typescript-node", "TypeScript + Node")
+            new StackItem("typescript-node", "TypeScript + Node"),
+            BackendStack.PYTHON_FASTAPI,
+            new StackItem("python-fastapi", "Python + FastAPI")
 
     );
 
@@ -22,7 +24,9 @@ public class StackRegistry {
             FrontendStack.TYPESCRIPT_REACT,
             new StackItem("typescript-react", "TypeScript + React"),
             FrontendStack.JAVASCRIPT_REACT,
-            new StackItem("javascript-react", "JavaScript + React")
+            new StackItem("javascript-react", "JavaScript + React"),
+            FrontendStack.TYPESCRIPT_ANGULAR,
+            new StackItem("typescript-angular", "TypeScript + Angular")
     );
 
     public Set<StackItem> getBackendStacks() {
