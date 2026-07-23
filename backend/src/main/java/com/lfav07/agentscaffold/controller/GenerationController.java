@@ -33,7 +33,7 @@ public class GenerationController {
     @PostMapping("/scaffold")
     public ResponseEntity<Resource> scaffold(@Valid @RequestBody GenerationRequest request){
         log.info("Generation request received — project: {}, preset: {}, backend: {}, frontend: {}",
-                request.projectName(), request.preset(), request.backendStack(), request.frontendStack());
+                request.projectName(), request.presetKey(), request.backendStack(), request.frontendStack());
         GenerationResult result =  generationService.generate(request);
         byte[] zip = result.zip();
         ByteArrayResource resource = new ByteArrayResource(zip);

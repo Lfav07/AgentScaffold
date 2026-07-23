@@ -36,7 +36,7 @@ public class TemplateEngine {
         String templateContent =
                 loadTemplate(executionUnit.resolveTemplateFileName());
 
-        log.debug("Template rendered for agent: {}", executionUnit.type());
+        log.debug("Template rendered for agent: {}", executionUnit.agent().getSlug());
 
         return Mustache.compiler()
                 .compile(templateContent)

@@ -1,7 +1,6 @@
 package com.lfav07.agentscaffold.exception.handler;
 
 import com.lfav07.agentscaffold.exception.ApiErrorResponse;
-import com.lfav07.agentscaffold.exception.InvalidAgentTypeException;
 import com.lfav07.agentscaffold.exception.InvalidPresetException;
 import com.lfav07.agentscaffold.exception.InvalidStackException;
 import com.lfav07.agentscaffold.exception.TemplateNotFoundException;
@@ -34,11 +33,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidStackException.class)
     public ResponseEntity<ApiErrorResponse> handleInvalidStack(InvalidStackException e, HttpServletRequest request) {
         return buildError(HttpStatus.BAD_REQUEST, "Invalid stack selection", request);
-    }
-
-    @ExceptionHandler(InvalidAgentTypeException.class)
-    public ResponseEntity<ApiErrorResponse> handleInvalidAgentType(InvalidAgentTypeException e, HttpServletRequest request) {
-        return buildError(HttpStatus.BAD_REQUEST, "Invalid agent type", request);
     }
 
     @ExceptionHandler(TemplateNotFoundException.class)

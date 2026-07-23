@@ -1,7 +1,8 @@
 package com.lfav07.agentscaffold.dto.validation;
 
 import com.lfav07.agentscaffold.dto.GenerationRequest;
-import com.lfav07.agentscaffold.model.agent.CoreAgentType;
+import com.lfav07.agentscaffold.exception.InvalidPresetException;
+import com.lfav07.agentscaffold.model.agent.Agent;
 import com.lfav07.agentscaffold.model.stack.StackCategory;
 import com.lfav07.agentscaffold.resolver.PresetAgentResolver;
 import jakarta.validation.ConstraintValidator;
@@ -20,21 +21,29 @@ public class GenerationRequestValidator
 
     @Override
     public boolean isValid(GenerationRequest request, ConstraintValidatorContext context) {
-        if (request == null || request.preset() == null) {
+        if (request == null || request.presetKey() == null) {
             return true;
         }
 
-        Set<CoreAgentType> agents = presetAgentResolver.resolve(request.preset());
+        Set<Agent> agents;
+        try {
+            agents = presetAgentResolver.resolve(request.presetKey());
+        } catch (InvalidPresetException e) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getMessage())
+                    .addPropertyNode("presetKey").addConstraintViolation();
+            return false;
+        }
 
         boolean hasBackendAgents = agents.stream()
-                .anyMatch(a -> a.getStackCategory() == StackCategory.BACKEND);
+                .anyMatch(a -> a.getStack().getCategory() == StackCategory.BACKEND);
         boolean hasFrontendAgents = agents.stream()
-                .anyMatch(a -> a.getStackCategory() == StackCategory.FRONTEND);
+                .anyMatch(a -> a.getStack().getCategory() == StackCategory.FRONTEND);
 
         if (hasBackendAgents && request.backendStack() == null) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(
-                    "Backend stack is required for preset: " + request.preset()
+                    "Backend stack is required for preset: " + request.presetKey()
             ).addPropertyNode("backendStack").addConstraintViolation();
             return false;
         }
@@ -42,7 +51,7 @@ public class GenerationRequestValidator
         if (hasFrontendAgents && request.frontendStack() == null) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(
-                    "Frontend stack is required for preset: " + request.preset()
+                    "Frontend stack is required for preset: " + request.presetKey()
             ).addPropertyNode("frontendStack").addConstraintViolation();
             return false;
         }

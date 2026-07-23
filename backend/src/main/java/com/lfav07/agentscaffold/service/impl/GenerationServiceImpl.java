@@ -6,11 +6,8 @@ import com.lfav07.agentscaffold.dto.AgentRenderContext;
 import com.lfav07.agentscaffold.dto.GenerationRequest;
 import com.lfav07.agentscaffold.dto.GenerationResult;
 import com.lfav07.agentscaffold.exception.InvalidStackException;
-import com.lfav07.agentscaffold.model.agent.CoreAgentType;
-import com.lfav07.agentscaffold.model.stack.BackendStack;
-import com.lfav07.agentscaffold.model.stack.FrontendStack;
-import com.lfav07.agentscaffold.model.stack.GeneralStack;
-import com.lfav07.agentscaffold.model.stack.Stack;
+import com.lfav07.agentscaffold.model.agent.Agent;
+import com.lfav07.agentscaffold.model.stack.StackCategory;
 import com.lfav07.agentscaffold.resolver.ContextResolver;
 import com.lfav07.agentscaffold.resolver.PresetAgentResolver;
 import com.lfav07.agentscaffold.service.GenerationService;
@@ -35,25 +32,18 @@ public class GenerationServiceImpl implements GenerationService {
     private final TemplateEngine templateEngine;
     private final ZipGenerator zipGenerator;
 
-    /**
-     * Generates a project ZIP by resolving preset agents, rendering templates for each agent,
-     * and packaging the resulting files into a byte array.
-     *
-     * @param request the generation request containing project name, stacks, and agents.
-     * @return the generation result containing the ZIP bytes and filename.
-     */
     @Override
     public GenerationResult generate(GenerationRequest request) {
         long start = System.nanoTime();
-        log.info("Generation started — preset: {}", request.preset());
+        log.info("Generation started — preset: {}", request.presetKey());
         Map<String, String> fileMap = new HashMap<>();
-        Set<CoreAgentType> presetAgents = presetAgentResolver.resolve(request.preset());
-        log.debug("Preset {} resolved to {} agents", request.preset(), presetAgents.size());
-        for (CoreAgentType type : presetAgents) {
-            Stack stack = determineStack(type, request);
-            AgentExecutionUnit unit = new AgentExecutionUnit(type, stack);
+        Set<Agent> presetAgents = presetAgentResolver.resolve(request.presetKey());
+        log.debug("Preset {} resolved to {} agents", request.presetKey(), presetAgents.size());
+        for (Agent agent : presetAgents) {
+            String stackKey = determineStackKey(agent, request);
+            AgentExecutionUnit unit = new AgentExecutionUnit(agent, stackKey);
             AgentRenderContext context = contextResolver.resolve(unit, request.projectName());
-            log.debug("Processing agent: {}", type);
+            log.debug("Processing agent: {}", agent.getSlug());
             String agentContent = templateEngine.buildAgent(unit, context);
             fileMap.put(unit.resolveOutputFileName(), agentContent);
         }
@@ -61,7 +51,6 @@ public class GenerationServiceImpl implements GenerationService {
         String filename = request.projectName()
                 .trim()
                 .replaceAll(appProperties.generation().sanitizeRegex(), "-");
-
 
         long durationMs = Duration.ofNanos(System.nanoTime() - start).toMillis();
 
@@ -72,28 +61,19 @@ public class GenerationServiceImpl implements GenerationService {
         );
     }
 
-
-    /**
-     * Resolves the appropriate stack enum for a given core agent type based on its stack category
-     * and the stacks provided in the generation request.
-     *
-     * @param type    the core agent type whose stack category drives selection.
-     * @param request the generation request carrying backend/frontend stack choices.
-     * @return the resolved stack (BackendStack, FrontendStack, or GeneralStack.GENERAL).
-     */
-    private Stack determineStack(CoreAgentType type, GenerationRequest request) {
-        return switch (type.getStackCategory()) {
+    private String determineStackKey(Agent agent, GenerationRequest request) {
+        return switch (agent.getStack().getCategory()) {
             case BACKEND -> {
-                BackendStack bs = request.backendStack();
+                String bs = request.backendStack();
                 if (bs == null) throw new InvalidStackException("Backend stack not provided");
                 yield bs;
             }
             case FRONTEND -> {
-                FrontendStack fs = request.frontendStack();
+                String fs = request.frontendStack();
                 if (fs == null) throw new InvalidStackException("Frontend stack not provided");
                 yield fs;
             }
-            case GENERAL -> GeneralStack.GENERAL;
+            case GENERAL -> "general";
         };
     }
 }
