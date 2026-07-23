@@ -6,7 +6,8 @@ import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 
 public enum BackendStack implements  Stack {
-    JAVA_SPRING("java-spring");
+    JAVA_SPRING("java-spring"),
+    TYPESCRIPT_NODE("typescript-node");
 
     @JsonValue
     private final String id;

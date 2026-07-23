@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.lfav07.agentscaffold.exception.InvalidStackException;
 
 public enum FrontendStack implements  Stack {
-    TYPESCRIPT_REACT("typescript-react");
-
+    TYPESCRIPT_REACT("typescript-react"),
+    JAVASCRIPT_REACT("javascript-react");
     @JsonValue
     private final String id;
 

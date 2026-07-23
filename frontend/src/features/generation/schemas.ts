@@ -10,10 +10,12 @@ export const PresetEnum = z.enum([
     "frontend-ready"
 ])
 export const BackendStackEnum = z.enum([
-    "java-spring"
+    "java-spring",
+    "typescript-node"
 ])
 export const FrontendStackEnum = z.enum([
-    "typescript-react"
+    "typescript-react",
+    "javascript-react"
 ])
 
 

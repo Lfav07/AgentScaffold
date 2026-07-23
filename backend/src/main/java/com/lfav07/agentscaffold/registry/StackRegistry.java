@@ -12,12 +12,17 @@ public class StackRegistry {
 
     private static final Map<BackendStack, StackItem> BACKEND = Map.of(
             BackendStack.JAVA_SPRING,
-            new StackItem("java-spring", "Java + Spring Boot")
+            new StackItem("java-spring", "Java + Spring Boot"),
+            BackendStack.TYPESCRIPT_NODE,
+            new StackItem("typescript-node", "TypeScript + Node")
+
     );
 
     private static final Map<FrontendStack, StackItem> FRONTEND = Map.of(
             FrontendStack.TYPESCRIPT_REACT,
-            new StackItem("typescript-react", "TypeScript + React")
+            new StackItem("typescript-react", "TypeScript + React"),
+            FrontendStack.JAVASCRIPT_REACT,
+            new StackItem("javascript-react", "JavaScript + React")
     );
 
     public Set<StackItem> getBackendStacks() {
