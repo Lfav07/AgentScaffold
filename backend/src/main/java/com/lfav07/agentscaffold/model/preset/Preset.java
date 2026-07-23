@@ -2,18 +2,16 @@ package com.lfav07.agentscaffold.model.preset;
 
 import com.lfav07.agentscaffold.model.agent.Agent;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Table(name = "presets")
 public class Preset {
 
@@ -30,7 +28,11 @@ public class Preset {
     @Column
     private String description;
 
-    @OneToMany
-    @Column
+    @ManyToMany
+    @JoinTable(
+        name = "preset_agents",
+        joinColumns = @JoinColumn(name = "preset_id"),
+        inverseJoinColumns = @JoinColumn(name = "agent_id")
+    )
     private Set<Agent> agents;
 }

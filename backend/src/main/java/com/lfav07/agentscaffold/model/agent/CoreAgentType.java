@@ -1,56 +1,14 @@
 package com.lfav07.agentscaffold.model.agent;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.lfav07.agentscaffold.exception.InvalidAgentTypeException;
-import com.lfav07.agentscaffold.model.stack.StackCategory;
-
 
 public enum CoreAgentType {
-
-    BACKEND_ARCHITECT(StackCategory.BACKEND, "backend-architect"),
-    BACKEND_ARCHITECT_REVIEWER(StackCategory.BACKEND, "backend-architect-reviewer"),
-    BACKEND_IMPLEMENTER(StackCategory.BACKEND, "backend-implementer"),
-    BACKEND_TESTER(StackCategory.BACKEND, "backend-tester"),
-    FRONTEND_ARCHITECT(StackCategory.FRONTEND, "frontend-architect"),
-    FRONTEND_ARCHITECT_REVIEWER(StackCategory.FRONTEND, "frontend-architect-reviewer"),
-    FRONTEND_IMPLEMENTER(StackCategory.FRONTEND, "frontend-implementer"),
-    FRONTEND_TESTER(StackCategory.FRONTEND, "frontend-tester"),
-    FINAL_REVIEWER(StackCategory.GENERAL, "final-reviewer");
-
-    private final StackCategory stackCategory;
-    private final String fileName;
-
-    CoreAgentType(StackCategory stackCategory, String fileName) {
-        this.stackCategory = stackCategory;
-        this.fileName = fileName;
-    }
-
-    public String getFileName() { return fileName; }
-    public StackCategory getStackCategory() { return stackCategory; }
-
-
-    /**
-     * Resolves a case-insensitive string value to the corresponding core agent type constant.
-     *
-     * @param value the string value to resolve (may be null or malformed).
-     * @return the matching CoreAgentType constant.
-     * @throws InvalidAgentTypeException if no match is found or the value is null.
-     */
-    @JsonCreator
-    public static CoreAgentType fromValue(String value) {
-        if (value == null) {
-            throw new InvalidAgentTypeException("Core Agent Type cannot be null");
-        }
-
-        String normalized = value.trim()
-                .toUpperCase()
-                .replace("-", "_");
-
-        try {
-            return CoreAgentType.valueOf(normalized);
-        } catch (IllegalArgumentException ex) {
-            throw new InvalidAgentTypeException("Invalid Core Agent Type: " + value);
-        }
-    }
-
+    BACKEND_ARCHITECT,
+    BACKEND_ARCHITECT_REVIEWER,
+    BACKEND_IMPLEMENTER,
+    BACKEND_TESTER,
+    FRONTEND_ARCHITECT,
+    FRONTEND_ARCHITECT_REVIEWER,
+    FRONTEND_IMPLEMENTER,
+    FRONTEND_TESTER,
+    FINAL_REVIEWER
 }
