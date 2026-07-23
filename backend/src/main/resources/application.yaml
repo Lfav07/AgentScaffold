@@ -6,6 +6,13 @@ spring:
   web:
     resources:
       add-mappings: false
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/agentscaffold
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
 
 app:
   paths:
