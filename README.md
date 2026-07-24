@@ -43,22 +43,26 @@ The exact files depend on the selected preset.
 
 ## Supported Presets
 
-| Preset | Purpose |
-| --- | --- |
+| Preset                 | Purpose                                                                                                        |
+|------------------------|----------------------------------------------------------------------------------------------------------------|
 | `enterprise-fullstack` | Full backend and frontend pipeline with architecture, review, implementation, testing, and final review agents. |
-| `enterprise-spring` | Backend-focused Spring pipeline with architecture, review, implementation, testing, and final review agents. |
-| `enterprise-react` | Frontend-focused React pipeline with architecture, review, implementation, testing, and final review agents. |
-| `startup-ready` | Lean full-stack setup with architecture, implementation, and testing agents. |
-| `spring-ready` | Streamlined Spring backend setup. |
-| `react-ready` | Streamlined React frontend setup. |
+| `enterprise-backend`   | Backend-focused  pipeline with architecture, review, implementation, testing, and final review agents.    |
+| `enterprise-frontend`  | Frontend-focused pipeline with architecture, review, implementation, testing, and final review agents.    |
+| `startup-ready`        | Lean full-stack setup with architecture, implementation, and testing agents.                                   |
+| `backend-ready`         | Streamlined backend setup.                                                                                     |
+| `frontend-ready`          | Streamlined frontend setup.                                                                                    |
 
 ## Supported Stacks
 
-| Category | Stack ID |
-| --- | --- |
-| Backend | `java-spring` |
-| Frontend | `typescript-react` |
-| General | `general` |
+| Category | Stack ID | Label |
+| --- | --- | --- |
+| Backend | `java-spring` | Java + Spring Boot |
+| Backend | `typescript-node` | TypeScript + Node |
+| Backend | `python-fastapi` | Python + FastAPI |
+| Frontend | `typescript-react` | TypeScript + React |
+| Frontend | `javascript-react` | JavaScript + React |
+| Frontend | `typescript-angular` | TypeScript + Angular |
+| General | `general` | General |
 
 ## Tech Stack
 
